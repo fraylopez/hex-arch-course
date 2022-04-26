@@ -1,7 +1,9 @@
 import * as fs from "fs";
 import { User } from "../User";
-
-export class UserDAO {
+interface Persistence {
+  create(user: User): Promise<void>;
+}
+export class UserDAO implements Persistence {
   private static storagePath = `${__dirname}/data/users`;
   constructor() {
     this.ensureDirectoryExistence(UserDAO.storagePath);

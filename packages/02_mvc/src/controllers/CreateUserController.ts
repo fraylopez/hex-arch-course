@@ -1,4 +1,4 @@
-import { UserDAO } from "../models/dao/FileSystemUserRepository";
+import { UserDAO } from "../models/dao/UserDAO";
 import { User } from "../models/User";
 
 export class CreateUserController {
@@ -9,3 +9,4 @@ export class CreateUserController {
     await this.dao.create(user);
   }
 }
+
