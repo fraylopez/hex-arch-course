@@ -29,7 +29,11 @@
   "composite": true,
   "references": [
     {
-      "path": "./packages/01_basic/tsconfig.json"
+      "path": [
+        "./packages/01_basic/tsconfig.json",
+        "./packages/02_mvc/tsconfig.json",
+        "./packages/03_bank/tsconfig.json",
+      ],
     },
     // {
     //   "path": "./packages/frontend/tsconfig.json"

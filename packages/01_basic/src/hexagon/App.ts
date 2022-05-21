@@ -1,13 +1,12 @@
-import { UserCreator } from "./hexagon/application/ports/primary/UserCreator";
-import { UserRepository } from "./hexagon/application/ports/secondary/UserRepository";
-import { CreateUserController } from "./hexagon/application/use-cases/CreateUserController";
+import { CreateUserController } from "./application/CreateUserController";
+import { ForCreatingUsers } from "./ports/primary/ForCreatingUsers";
+import { UserRepository } from "./ports/secondary/UserRepository";
 
-export class App implements UserCreator {
+export class App implements ForCreatingUsers {
   private readonly createUserController: CreateUserController;
   constructor(userRepository: UserRepository) {
     this.createUserController = new CreateUserController(userRepository);
   }
-
   async create(name: string, age: number): Promise<void> {
     await this.createUserController.create(name, age);
   }

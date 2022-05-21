@@ -1,6 +1,6 @@
 import * as readline from "readline-sync";
 import { ForCreatingUsers } from "../../hexagon/ports/primary/ForCreatingUsers";
-export class CLICreateUserView {
+export class CLIView {
   constructor(private readonly userCreator: ForCreatingUsers) { }
   render() {
     const name = readline.question("Set your name:");
