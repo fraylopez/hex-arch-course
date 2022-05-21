@@ -1,10 +1,7 @@
 import * as readline from "readline-sync";
 import { CreateUserController } from "../controllers/CreateUserController";
-import { UserDAO } from "../models/dao/UserDAO";
 export class CLICreateUserView {
-  private readonly createUserController: CreateUserController;
-  constructor() {
-    this.createUserController = new CreateUserController(new UserDAO());
+  constructor(private readonly createUserController: CreateUserController) {
   }
   render() {
     const name = readline.question("Set your name:");

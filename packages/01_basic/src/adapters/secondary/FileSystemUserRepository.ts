@@ -1,5 +1,5 @@
-import { UserRepository } from "../../application/ports/secondary/UserRepository";
-import { User } from "../../application/use-cases/User";
+import { UserRepository } from "../../hexagon/ports/secondary/UserRepository";
+import { User } from "../../hexagon/application/User";
 import * as fs from "fs";
 
 export class FileSystemUserRepository implements UserRepository {

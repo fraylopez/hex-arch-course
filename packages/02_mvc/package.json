@@ -1,17 +1,18 @@
 {
-  "name": "02_mvc",
+  "name": "mvc",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "ts-node src/index.ts"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "@types/node": "^17.0.24",
     "@types/readline-sync": "^1.4.4",
-    "@types/uuid": "^8.3.4"
+    "@types/uuid": "^8.3.4",
+    "ts-node": "^10.7.0"
   },
   "dependencies": {
     "readline-sync": "^1.4.10",

@@ -1,7 +1,7 @@
 import * as readline from "readline-sync";
-import { UserCreator } from "../../application/ports/primary/UserCreator";
+import { ForCreatingUsers } from "../../hexagon/ports/primary/ForCreatingUsers";
 export class CLICreateUserView {
-  constructor(private readonly userCreator: UserCreator) { }
+  constructor(private readonly userCreator: ForCreatingUsers) { }
   render() {
     const name = readline.question("Set your name:");
     const age = Number(readline.question("Set your age:"));
