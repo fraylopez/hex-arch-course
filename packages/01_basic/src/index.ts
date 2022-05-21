@@ -1,16 +1,11 @@
-import { CLICreateUserView } from "./adapters/primary/CLICreateUserView";
+import { CLIView } from "./adapters/primary/CLIView";
 import { FileSystemUserRepository } from "./adapters/secondary/FileSystemUserRepository";
+import { App } from "./hexagon/App";
 import { ForCreatingUsers } from "./hexagon/ports/primary/ForCreatingUsers";
 import { UserRepository } from "./hexagon/ports/secondary/UserRepository";
-import { CreateUserController } from "./hexagon/application/CreateUserController";
 
-class App {
-  public static run(): void {
-    const userRepository: UserRepository = new FileSystemUserRepository();
-    const userCreator: ForCreatingUsers = new CreateUserController(userRepository);
-    const view = new CLICreateUserView(userCreator);
-    view.render();
-  }
-}
+const repositoryAdapter: UserRepository = new FileSystemUserRepository();
+const hexagon: ForCreatingUsers = new App(repositoryAdapter);
+const ui = new CLIView(hexagon);
 
-App.run();
+ui.render();
