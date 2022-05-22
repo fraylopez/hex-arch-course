@@ -1,6 +1,6 @@
 import { Account } from "../domain/Account";
 import { ForUsingAccounts } from "../domain/ForUsingAccounts";
-import { Money } from "../domain/Money";
+import { Money } from "../../_shared/domain/Money";
 import { AccountRepository } from "../domain/AccountRepository";
 import { UnknownAccountError } from "../domain/UnknownAccountError";
 import assert from "assert";

@@ -2,11 +2,7 @@
   // "extends": "@goinapp/tsconfig/tsconfig.json",
   "compilerOptions": {
     // "module": "ES2022",
-    "paths": {
-      "finder": [
-        "./packages/finder/src/*"
-      ],
-    },
+
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
@@ -15,24 +11,15 @@
     "forceConsistentCasingInFileNames": true,
     "noFallthroughCasesInSwitch": true,
     "target": "es2016",
+    // "module": "esnext",
     "useUnknownInCatchVariables": false,
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
+    // "noEmit": true,
+    // "jsx": "react-jsx",
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
+    // "sourceMap": true,
   },
-  "composite": true,
-  // "references": [
-  //   {
-  //     "path": "./packages/01_basic/tsconfig.json",
-  //   },
-  //   {
-  //     "path": "./packages/02_mvc/tsconfig.json",
-  //   },
-  //   {
-  //     "path": "./packages/03_bank/tsconfig.json",
-  //   },
-
-  // ],
 }

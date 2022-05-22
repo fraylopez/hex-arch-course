@@ -4,7 +4,7 @@ import { MemoryUserRepository } from "../src/adapters/secondary/MemoryUserReposi
 import { App } from "../src/hexagon/App";
 import { ForCreatingUsers } from "../src/hexagon/ports/primary/ForCreatingUsers";
 
-describe('TestAdapter', () => {
+describe('Basic Hex TestAdapter', () => {
   let testAdapter: ForCreatingUsers;
   let repositoryAdapter: MemoryUserRepository;
   before(() => {

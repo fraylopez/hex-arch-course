@@ -1,6 +1,6 @@
 import * as fs from "fs";
-import { Account } from "../../domain/Account";
-import { AccountRepository } from "../../domain/AccountRepository";
+import { Account } from "../../../domain/Account";
+import { AccountRepository } from "../../../domain/AccountRepository";
 
 export class FileSystemAccountRepository implements AccountRepository {
   private static storagePath = `${__dirname}/data/accounts`;

@@ -1,12 +1,11 @@
 import * as readline from "readline-sync";
-import { Account } from "../../domain/Account";
-import { DomainError } from "../../domain/DomainError";
-import { ForUsingAccounts } from "../../domain/ForUsingAccounts";
-export class CLIView {
+import { Account } from "../../contexts/accounting/domain/Account";
+import { DomainError } from "../../contexts/accounting/domain/DomainError";
+import { ForUsingAccounts } from "../../contexts/accounting/domain/ForUsingAccounts";
+export class ATMCLIView {
   private readonly options: Array<(onSuccess: () => void, onError: (err: Error) => void) => void>;
   constructor(private readonly bank: ForUsingAccounts) {
     this.options = [
-      this.createAccount.bind(this),
       this.findAccount.bind(this),
       this.deposit.bind(this),
       this.withdraw.bind(this),
