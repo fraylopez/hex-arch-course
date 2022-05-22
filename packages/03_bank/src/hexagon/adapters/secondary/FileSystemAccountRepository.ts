@@ -9,10 +9,9 @@ export class FileSystemAccountRepository implements AccountRepository {
   }
 
   async create(account: Account): Promise<void> {
-    const data = JSON.stringify(account.serialize());
-    const filename = `${FileSystemAccountRepository.storagePath}/${account.id}.json`;
-    fs.writeFileSync(filename, data, "utf8");
+    await this.update(account);
   }
+
   async update(account: Account): Promise<void> {
     const data = JSON.stringify(account.serialize());
     const filename = `${FileSystemAccountRepository.storagePath}/${account.id}.json`;
