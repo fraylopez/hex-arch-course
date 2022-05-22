@@ -24,7 +24,7 @@ export class Account {
 
   withdraw(amount: Money) {
     assert(amount.sameCurrency(this.balance), new IncompatibleCurrencyError());
-    this.balance = this.balance.sustract(amount);
+    this.balance = this.balance.subtract(amount);
   }
 
   deposit(amount: Money) {

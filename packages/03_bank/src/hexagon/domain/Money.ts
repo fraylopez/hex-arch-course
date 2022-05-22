@@ -21,7 +21,7 @@ export class Money {
     return new Money(this.value + amount.value, this.currency);
   }
 
-  sustract(amount: Money) {
+  subtract(amount: Money) {
     return new Money(this.value - amount.value, this.currency);
   }
   sameCurrency(balance: Money): unknown {
