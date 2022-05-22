@@ -1,11 +1,13 @@
+import assert from "assert";
 import * as uuid from 'uuid';
+import { IncompatibleCurrencyError } from "./IncompatibleCurrencyError";
 import { Money } from "./Money";
 
 export class Account {
   private constructor(
     public readonly id: string,
     public readonly name: string,
-    private readonly balance: Money,
+    private balance: Money,
   ) { }
 
   static create(name: string, currency: string): Account {
@@ -21,10 +23,13 @@ export class Account {
   }
 
   withdraw(amount: Money) {
-    this.balance.sustract(amount);
+    assert(amount.sameCurrency(this.balance), new IncompatibleCurrencyError());
+    this.balance = this.balance.sustract(amount);
   }
+
   deposit(amount: Money) {
-    this.balance.add(amount);
+    assert(amount.sameCurrency(this.balance), new IncompatibleCurrencyError());
+    this.balance = this.balance.add(amount);
   }
 
   getBalance() {
@@ -39,3 +44,4 @@ export class Account {
     };
   }
 }
+

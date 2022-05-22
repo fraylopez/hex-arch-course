@@ -2,7 +2,8 @@ import { Account } from "../domain/Account";
 import { ForUsingAccounts } from "../domain/ForUsingAccounts";
 import { Money } from "../domain/Money";
 import { AccountRepository } from "../domain/AccountRepository";
-import { UnknownAccountError } from "./UnknownAccountError";
+import { UnknownAccountError } from "../domain/UnknownAccountError";
+import assert from "assert";
 
 export class Bank implements ForUsingAccounts {
   constructor(private readonly accountRepository: AccountRepository) { }
@@ -14,17 +15,17 @@ export class Bank implements ForUsingAccounts {
   }
   async find(accountId: string): Promise<Account> {
     const account = await this.accountRepository.find(accountId);
-    if (!account) {
-      throw new UnknownAccountError();
-    }
+    assert(account, new UnknownAccountError(accountId));
     return account;
   }
   async deposit(accountId: string, amount: Money): Promise<void> {
     const account = await this.find(accountId);
     account.deposit(amount);
+    await this.accountRepository.update(account);
   }
   async withdraw(accountId: string, amount: Money): Promise<void> {
     const account = await this.find(accountId);
     account.withdraw(amount);
+    await this.accountRepository.update(account);
   }
 }

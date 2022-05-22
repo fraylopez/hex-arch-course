@@ -1,6 +1,7 @@
 export class Money {
 
 
+
   constructor(
     public readonly value: number,
     public readonly currency: string
@@ -22,5 +23,8 @@ export class Money {
 
   sustract(amount: Money) {
     return new Money(this.value - amount.value, this.currency);
+  }
+  sameCurrency(balance: Money): unknown {
+    return this.currency === balance.currency;
   }
 }

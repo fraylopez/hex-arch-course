@@ -13,6 +13,11 @@ export class FileSystemAccountRepository implements AccountRepository {
     const filename = `${FileSystemAccountRepository.storagePath}/${account.id}.json`;
     fs.writeFileSync(filename, data, "utf8");
   }
+  async update(account: Account): Promise<void> {
+    const data = JSON.stringify(account.serialize());
+    const filename = `${FileSystemAccountRepository.storagePath}/${account.id}.json`;
+    fs.writeFileSync(filename, data, "utf8");
+  }
 
   async find(accountId: string): Promise<Account> {
     const data = fs.readFileSync(`${FileSystemAccountRepository.storagePath}/${accountId}.json`, "utf8");

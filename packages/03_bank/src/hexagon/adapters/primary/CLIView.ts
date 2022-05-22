@@ -1,12 +1,16 @@
 import * as readline from "readline-sync";
 import { Account } from "../../domain/Account";
+import { DomainError } from "../../domain/DomainError";
 import { ForUsingAccounts } from "../../domain/ForUsingAccounts";
+import { Money } from "../../domain/Money";
 export class CLIView {
-  private readonly options: Array<() => void>;
+  private readonly options: Array<(onSuccess: () => void, onError: (err: Error) => void) => void>;
   constructor(private readonly bank: ForUsingAccounts) {
     this.options = [
       this.createAccount.bind(this),
       this.findAccount.bind(this),
+      this.deposit.bind(this),
+      this.withdraw.bind(this),
     ];
   }
   render() {
@@ -16,18 +20,27 @@ export class CLIView {
       ` ${(index + 1)}) ${option.name.replace("bound ", "")}`).join("\n")}`);
 
     const option = Number(readline.question("Option:"));
-    this.options[option - 1]();
+    this.options[option - 1](this.render.bind(this), this.onError.bind(this));
+  }
+  private onError(err: Error) {
+    if (err instanceof DomainError) {
+      console.log(err.constructor.name);
+    }
+    else {
+      console.log("Something failed, try again...");
+    }
   }
 
-  private createAccount() {
+  private createAccount(onSuccess: () => void, onError: (err: Error) => void) {
     const name = readline.question("Set your name:");
     const currency = readline.question("In wich currency do you operate?:");
     this.bank.create(name, currency)
       .then((accountId: string) => console.log(`Account ${accountId} created!`))
-      .catch((err) => console.log("Something happened", err));
+      .catch(onError)
+      .finally(onSuccess);
   }
 
-  private findAccount() {
+  private findAccount(onSuccess: () => void, onError: (err: Error) => void) {
     const accountId = readline.question("Account id:");
     this.bank.find(accountId)
       .then((account: Account) => {
@@ -35,6 +48,29 @@ export class CLIView {
         console.log(`Holder: ${account.name}`);
         console.log(`Balance: ${account.getBalance().value} ${account.getBalance().currency}`);
       })
-      .catch((err) => console.log("Something happened", err));
+      .catch(onError)
+      .finally(onSuccess);
+  }
+  private deposit(onSuccess: () => void, onError: (err: Error) => void) {
+    const accountId = readline.question("Account id?:");
+    const amount = readline.question("amount?:");
+    const currency = readline.question("currency?:");
+    this.bank.deposit(accountId, new Money(Number(amount), currency))
+      .then(() => {
+        console.log("Your deposit completed successfully!");
+      })
+      .catch(onError)
+      .finally(onSuccess);
+  }
+  private withdraw(onSuccess: () => void, onError: (err: Error) => void) {
+    const accountId = readline.question("Account id?:");
+    const amount = readline.question("amount?:");
+    const currency = readline.question("currency?:");
+    this.bank.withdraw(accountId, new Money(Number(amount), currency))
+      .then(() => {
+        console.log("Your deposit completed successfully!");
+      })
+      .catch(onError)
+      .finally(onSuccess);
   }
 }
