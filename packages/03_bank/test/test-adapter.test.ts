@@ -2,7 +2,7 @@
 import chai, { expect } from "chai";
 import { MemoryAccountRepository } from "../src/hexagon/adapters/secondary/MemoryAccountRepository";
 import { Bank } from "../src/hexagon/application/Bank";
-import { ForUsingAccounts } from "../src/hexagon/domain/ForUsingAccounts";
+import { ForManagingAccounts } from "../src/hexagon/domain/ForManagingAccounts";
 import { IncompatibleCurrencyError } from "../src/hexagon/domain/IncompatibleCurrencyError";
 import { Money } from "../src/hexagon/domain/Money";
 import chaiAsPromised from "chai-as-promised";
@@ -10,7 +10,7 @@ import chaiAsPromised from "chai-as-promised";
 chai.use(chaiAsPromised);
 
 describe('Bank TestAdapter', () => {
-  let testAdapter: ForUsingAccounts;
+  let testAdapter: ForManagingAccounts;
   before(() => {
     testAdapter = new Bank(new MemoryAccountRepository());
   });

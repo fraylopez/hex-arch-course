@@ -1,11 +1,11 @@
 import { Account } from "../domain/Account";
-import { ForUsingAccounts } from "../domain/ForUsingAccounts";
+import { ForManagingAccounts } from "../domain/ForManagingAccounts";
 import { Money } from "../domain/Money";
 import { AccountRepository } from "../domain/AccountRepository";
 import { UnknownAccountError } from "../domain/UnknownAccountError";
 import assert from "assert";
 
-export class Bank implements ForUsingAccounts {
+export class Bank implements ForManagingAccounts {
   constructor(private readonly accountRepository: AccountRepository) { }
 
   async create(name: string, currency: string): Promise<string> {

@@ -1,19 +1,27 @@
+import { MemoryRepository } from "../../../../_core/adapters/persistance/memory/MemoryRepository";
 import { Account } from "../../../domain/Account";
 import { AccountRepository } from "../../../domain/AccountRepository";
 
-export class MemoryAccountRepository implements AccountRepository {
-  private accounts: Account[] = [];
+type StoredAccount = ReturnType<typeof Account.prototype.serialize>;
 
+export class MemoryAccountRepository implements AccountRepository {
+  private memoryRepository: MemoryRepository<StoredAccount>;
+  constructor() {
+    this.memoryRepository = new MemoryRepository();
+  }
+  setMemoryRepository(memoryRepository: MemoryRepository<any>): void {
+    this.memoryRepository = memoryRepository as MemoryRepository<StoredAccount>;
+  }
   create(account: Account): Promise<void> {
-    this.accounts.push(account);
-    return Promise.resolve();
+    const storable = account.serialize();
+    return this.memoryRepository.create(storable);
   }
   async update(account: Account): Promise<void> {
-    this.accounts.splice(this.accounts.findIndex(a => a.id === account.id), 1, account);
-    await this.create(account);
+    const storable = account.serialize();
+    return this.memoryRepository.update(storable);
   }
-  find(accountId: string): Promise<Account | undefined> {
-    const account = this.accounts.find(a => a.id === accountId);
-    return Promise.resolve(account);
+  async find(accountId: string): Promise<Account | null> {
+    const stored = await this.memoryRepository.find(accountId);
+    return Account.deserialize(stored!);
   }
 }

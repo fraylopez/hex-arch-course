@@ -1,10 +1,10 @@
 import * as readline from "readline-sync";
 import { Account } from "../../domain/Account";
 import { DomainError } from "../../domain/DomainError";
-import { ForUsingAccounts } from "../../domain/ForUsingAccounts";
+import { ForManagingAccounts } from "../../domain/ForManagingAccounts";
 export class CLIView {
   private readonly options: Array<(onSuccess: () => void, onError: (err: Error) => void) => void>;
-  constructor(private readonly bank: ForUsingAccounts) {
+  constructor(private readonly bank: ForManagingAccounts) {
     this.options = [
       this.createAccount.bind(this),
       this.findAccount.bind(this),
