@@ -23,4 +23,8 @@ export class AdminAccount {
       isOpen: this._isOpen,
     };
   }
+
+  static deserialize(data: ReturnType<typeof AdminAccount.prototype.serialize>) {
+    return new AdminAccount(data.id, data.isOpen);
+  }
 }

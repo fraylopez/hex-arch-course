@@ -11,7 +11,8 @@
   "scripts": {
     "test:backend": "yarn --cwd packages/backend test",
     "start:backend": "yarn --cwd packages/backend start",
-    "start:frontend": "yarn --cwd packages/frontend start"
+    "start:frontend": "yarn --cwd packages/frontend start",
+    "test": "mocha"
   },
   "devDependencies": {
     "@types/chai": "^4.3.0",

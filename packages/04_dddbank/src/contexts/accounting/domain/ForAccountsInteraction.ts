@@ -1,7 +1,6 @@
 import { Account } from "./Account";
 
-export interface ForManagingAccounts {
-  create(name: string, currency: string): Promise<string>;
+export interface ForExistingAccountsOperation {
   find(accountId: string): Promise<Account>;
   deposit(accountId: string, amount: number, currency: string): Promise<void>;
   withdraw(accountId: string, amount: number, currency: string): Promise<void>;

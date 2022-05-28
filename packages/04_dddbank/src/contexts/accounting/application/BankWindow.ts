@@ -1,11 +1,12 @@
 import { Account } from "../domain/Account";
-import { ForManagingAccounts } from "../domain/ForUsingAccounts";
+import { ForCreatingAccounts } from "../domain/ForCreatingAccounts";
 import { Money } from "../../_shared/domain/Money";
 import { AccountRepository } from "../domain/AccountRepository";
 import { UnknownAccountError } from "../domain/UnknownAccountError";
 import assert from "assert";
+import { ForExistingAccountsOperation } from "../domain/ForAccountsInteraction";
 
-export class Bank implements ForManagingAccounts {
+export class BankWindow implements ForCreatingAccounts, ForExistingAccountsOperation {
   constructor(private readonly accountRepository: AccountRepository) { }
 
   async create(name: string, currency: string): Promise<string> {

@@ -1,4 +1,4 @@
-import { MemoryRepository } from "../../../../_core/adapters/persistance/memory/MemoryRepository";
+import { MemoryRepository } from "../../../../_core/infrastructure/persistance/memory/MemoryRepository";
 import { AdminAccount } from "../../../domain/AdminAccount";
 import { AdminAccountRepository } from "../../../domain/AdminAccountRepository";
 

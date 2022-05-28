@@ -4,7 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "ts-node src/index.ts"
+    "start:window": "ts-node src/apps/window/index.ts",
+    "start:atm": "ts-node src/apps/atm/index.ts",
+    "start:admin": "ts-node src/apps/admin/index.ts",
+    "test": "mocha "
   },
   "author": "",
   "license": "ISC",
