@@ -12,9 +12,6 @@ export class MemoryAdminAccountRepository implements AdminAccountRepository {
   constructor() {
     this.memoryRepository = new MemoryRepository();
   }
-  setMemoryRepository(memoryRepository: MemoryRepository<any>): void {
-    this.memoryRepository = memoryRepository as MemoryRepository<StoredAdminAccount>;
-  }
 
   async find(accountId: string): Promise<AdminAccount | null> {
     const stored = await this.memoryRepository.find(accountId);

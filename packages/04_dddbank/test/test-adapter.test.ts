@@ -9,8 +9,6 @@ import { BankAdmin } from "../src/contexts/admin/application/BankAdmin";
 import { MemoryAdminAccountRepository } from "../src/contexts/admin/adapters/persistence/memory/MemoryAdminAccountRepository";
 import { MemoryAccountRepository } from "../src/contexts/accounting/infrastructure/persistance/memory/MemoryAccountRepository";
 import { ForManagingAccounts } from "../src/contexts/accounting/domain/ForUsingAccounts";
-import { Account } from "../src/contexts/accounting/domain/Account";
-import { MemoryRepository } from "../src/contexts/_core/adapters/persistance/memory/MemoryRepository";
 
 chai.use(chaiAsPromised);
 
@@ -63,12 +61,8 @@ describe('DDDBank TestAdapter', () => {
     let bankAdapter: ForManagingAccounts;
     let adminAdapter: ForAccountAdministration;
     before(() => {
-      const memoryRepository = new MemoryRepository<Account>();
       const memoryAccountRepository = new MemoryAccountRepository();
       const memoryAdminAccountRepository = new MemoryAdminAccountRepository();
-
-      memoryAccountRepository.setMemoryRepository(memoryRepository);
-      memoryAdminAccountRepository.setMemoryRepository(memoryRepository);
 
       bankAdapter = new Bank(memoryAccountRepository);
       adminAdapter = new BankAdmin(memoryAdminAccountRepository);

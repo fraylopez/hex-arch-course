@@ -1,13 +1,12 @@
+import { dataStore } from "./data-store";
 
 export class MemoryRepository<T extends { id: string; }>  {
-  private items: T[] = [];
-
   create(item: T): Promise<void> {
-    this.items.push(item);
+    dataStore.push(item);
     return Promise.resolve();
   }
   update(item: T): Promise<void> {
-    const current = this.items.find(a => a.id === item.id);
+    const current = dataStore.find(a => a.id === item.id);
     if (!current) {
       return this.create(item);
     }
@@ -19,11 +18,11 @@ export class MemoryRepository<T extends { id: string; }>  {
     return Promise.resolve();
   }
   find(id: string): Promise<T | null> {
-    const item = this.items.find(a => a.id === id);
+    const item = dataStore.find(a => a.id === id);
     return Promise.resolve(item || null);
   }
   findMany(query: keyof T): Promise<T[]> {
-    const matchedItems = this.items.filter(item => this.matchesQuery(item, query));
+    const matchedItems = dataStore.filter(item => this.matchesQuery(item, query));
     return Promise.resolve(matchedItems);
   }
 

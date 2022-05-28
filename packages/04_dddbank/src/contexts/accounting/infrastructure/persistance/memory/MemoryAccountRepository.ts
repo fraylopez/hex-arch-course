@@ -9,9 +9,7 @@ export class MemoryAccountRepository implements AccountRepository {
   constructor() {
     this.memoryRepository = new MemoryRepository();
   }
-  setMemoryRepository(memoryRepository: MemoryRepository<any>): void {
-    this.memoryRepository = memoryRepository as MemoryRepository<StoredAccount>;
-  }
+
   create(account: Account): Promise<void> {
     const storable = account.serialize();
     return this.memoryRepository.create(storable);
