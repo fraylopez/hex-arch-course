@@ -1,0 +1,53 @@
+@startuml HexagonalUpdate
+title Hexagonal Update
+actor Actor
+boundary App
+control ApplicationService
+control Repository
+database DataBase
+entity Entity
+
+Actor -> App : update
+App -> ApplicationService : update
+ApplicationService -> Repository :request entity
+Repository -> DataBase : request
+DataBase -> Repository : db-data
+Repository -> Repository : primitives
+Repository -> Entity : fromPrimitives
+Entity -> Repository : entity
+Repository -> ApplicationService : entity
+ApplicationService -> Entity : update
+Entity -> ApplicationService : updated
+
+ApplicationService -> Repository :update entity
+Repository -> Entity :toPrimitives
+Entity -> Repository :primitives
+Repository -> DataBase : update
+DataBase -> Repository : updated
+Repository -> ApplicationService : updated
+ApplicationService -> App : updated
+App -> Actor : updated
+@enduml
+
+@startuml HexagonalGet
+title Hexagonal Get
+actor Actor
+boundary App
+control ApplicationService
+control Repository
+database DataBase
+entity Entity
+
+Actor -> App : get
+App -> ApplicationService : get
+ApplicationService -> Repository :request entity
+Repository -> DataBase : request
+DataBase -> Repository : db-data
+Repository -> Repository : primitives
+Repository -> Entity : fromPrimitives
+Entity -> Repository : entity
+Repository -> ApplicationService : entity
+ApplicationService -> ApplicationService : dto
+ApplicationService -> App : dto
+App -> Actor : dto
+@enduml

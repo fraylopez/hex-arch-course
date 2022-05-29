@@ -1,0 +1,45 @@
+@startuml ActiveRecordUpdate
+title ActiveRecordUpdate
+actor Actor
+boundary App
+control ApplicationService
+entity Entity
+database DataBase
+
+Actor -> App : update
+App -> ApplicationService : update
+ApplicationService -> Entity :update
+Entity -> DataBase : request
+DataBase -> Entity : primitives
+Entity -> Entity : fromPrimitives
+Entity -> Entity : update
+Entity -> Entity : toPrimitives
+Entity -> DataBase : update
+DataBase -> Entity : updated
+Entity -> ApplicationService : updated
+ApplicationService -> App : updated
+App -> Actor : updated
+@enduml
+
+@startuml ActiveRecordGet
+title ActiveRecordGet
+actor Actor
+boundary App
+control ApplicationService
+entity Entity
+database DataBase
+
+Actor -> App : get
+App -> ApplicationService : get
+ApplicationService -> Entity :get
+Entity -> DataBase : request
+DataBase -> Entity : primitives
+Entity -> Entity : fromPrimitives
+Entity -> Entity : update
+Entity -> Entity : toPrimitives
+Entity -> DataBase : update
+DataBase -> Entity : updated
+Entity -> ApplicationService : updated
+ApplicationService -> App : updated
+App -> Actor : updated
+@enduml
