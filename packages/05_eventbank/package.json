@@ -1,0 +1,25 @@
+{
+  "name": "eventbank",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start:window": "ts-node src/apps/window/index.ts",
+    "start:atm": "ts-node src/apps/atm/index.ts",
+    "start:admin": "ts-node src/apps/admin/index.ts",
+    "start:analytics": "ts-node src/apps/analytics/index.ts",
+    "test": "mocha "
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^17.0.24",
+    "@types/readline-sync": "^1.4.4",
+    "@types/uuid": "^8.3.4",
+    "ts-node": "^10.7.0"
+  },
+  "dependencies": {
+    "readline-sync": "^1.4.10",
+    "uuid": "^8.3.2"
+  }
+}

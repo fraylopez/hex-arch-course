@@ -1,17 +1,23 @@
 import assert from "assert";
 import * as uuid from 'uuid';
 import { IncompatibleCurrencyError } from "./IncompatibleCurrencyError";
-import { Money } from "./Money";
+import { Money } from "../../_shared/domain/Money";
+import { AggregateRoot } from "../../_core/domain/AggregateRoot";
+import { AccountCreatedEvent } from "./AccountCreatedEvent";
 
-export class Account {
+export class Account extends AggregateRoot {
   private constructor(
     public readonly id: string,
     public readonly name: string,
     private balance: Money,
-  ) { }
+  ) {
+    super();
+  }
 
   static create(name: string, currency: string): Account {
-    return new Account(uuid.v4(), name, new Money(0, currency));
+    const account = new Account(uuid.v4(), name, new Money(0, currency));
+    account.onChange(new AccountCreatedEvent(account.id, currency));
+    return account;
   }
 
   static fromPrimitives(data: ReturnType<typeof Account.prototype.toPrimitives>): Account {

@@ -14,11 +14,11 @@ export class Account {
     return new Account(uuid.v4(), name, new Money(0, currency));
   }
 
-  static deserialize(data: ReturnType<typeof Account.prototype.serialize>): Account {
+  static fromPrimitives(data: ReturnType<typeof Account.prototype.toPrimitives>): Account {
     return new Account(
       data.id,
       data.holder,
-      Money.deserialize(data.balance)
+      Money.fromPrimitives(data.balance)
     );
   }
 
@@ -36,11 +36,11 @@ export class Account {
     return this.balance;
   }
 
-  serialize() {
+  toPrimitives() {
     return {
       id: this.id,
       holder: this.name,
-      balance: this.balance.serialize(),
+      balance: this.balance.toPrimitives(),
     };
   }
 }

@@ -4,10 +4,10 @@ export class Money {
     public readonly currency: string
   ) { }
 
-  static deserialize(serialized: ReturnType<typeof Money.prototype.serialize>): Money {
+  static fromPrimitives(serialized: ReturnType<typeof Money.prototype.toPrimitives>): Money {
     return new Money(serialized.value, serialized.currency);
   }
-  serialize() {
+  toPrimitives() {
     return {
       value: this.value,
       currency: this.currency

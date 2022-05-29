@@ -13,7 +13,7 @@ export class FileSystemAccountRepository implements AccountRepository {
   }
 
   update(account: Account): Promise<void> {
-    const data = JSON.stringify(account.serialize());
+    const data = JSON.stringify(account.toPrimitives());
     const filename = `${FileSystemAccountRepository.storagePath}/${account.id}.json`;
     fs.writeFileSync(filename, data, "utf8");
     return Promise.resolve();
@@ -21,7 +21,7 @@ export class FileSystemAccountRepository implements AccountRepository {
 
   find(accountId: string): Promise<Account> {
     const data = fs.readFileSync(`${FileSystemAccountRepository.storagePath}/${accountId}.json`, "utf8");
-    return Promise.resolve(Account.deserialize(JSON.parse(data)));
+    return Promise.resolve(Account.fromPrimitives(JSON.parse(data)));
   }
 
   private ensureDirectoryExistence(dirname: string) {
