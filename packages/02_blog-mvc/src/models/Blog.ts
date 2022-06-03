@@ -12,11 +12,14 @@ export class Blog {
     this.posts.push(post);
   }
 
-  read(author: string) {
-    return this.posts.filter(post => post.author === author);
+  getNewerPosts(author: string): Post[] {
+    return this.posts
+      .filter(post => post.author === author)
+      .sort((a, b) => b.date.getTime() - a.date.getTime());
   }
 
   toPrimitives() {
-    return this.posts.map(post => post.toPrimitives());
+    const primitives = this.posts.map(post => post.toPrimitives());
+    return primitives;
   }
 }

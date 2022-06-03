@@ -1,11 +1,11 @@
 import { CLIBlog as CLIBlog } from "./hexagon/adapters/driver/CLIBlog";
-import { FileSystemPostRepository } from "./hexagon/adapters/driven/FileSystemPostRepository";
-import { Blog } from "./hexagon/application/Blog";
+import { FileSystemBlogRepository } from "./hexagon/adapters/driven/FileSystemBlogRepository";
+import { BlogController } from "./hexagon/application/BlogController";
 import { ForPosting } from "./hexagon/ports/driver/ForPosting";
-import { PostRepository } from "./hexagon/ports/driven/PostRepository";
+import { BlogRepository } from "./hexagon/ports/driven/BlogRepository";
 
-const repositoryAdapter: PostRepository = new FileSystemPostRepository();
-const hexagon: ForPosting = new Blog(repositoryAdapter);
+const repositoryAdapter: BlogRepository = new FileSystemBlogRepository();
+const hexagon: ForPosting = new BlogController(repositoryAdapter);
 const ui = new CLIBlog(hexagon);
 
 ui.render();

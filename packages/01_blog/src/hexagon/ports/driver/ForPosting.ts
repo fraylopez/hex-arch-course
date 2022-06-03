@@ -1,4 +1,4 @@
-import { PostList } from "../../application/PostList";
+import { PostList } from "../../application/Blog";
 
 export interface ForPosting {
   post(author: string, content: string): Promise<void>;

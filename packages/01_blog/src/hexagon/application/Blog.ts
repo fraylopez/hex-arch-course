@@ -1,18 +1,25 @@
-import { ForPosting as ForPosting } from "../ports/driver/ForPosting";
-import { PostRepository as PostRepository } from "../ports/driven/PostRepository";
 import { Post } from "./Post";
-import { PostList } from "./PostList";
 
-export class Blog implements ForPosting {
-  constructor(private readonly postRepository: PostRepository) { }
-
-  async post(author: string, content: string): Promise<void> {
-    const post = new Post(author, content);
-    await this.postRepository.post(post);
+export class Blog {
+  constructor(private readonly posts: Post[] = []) {
   }
 
-  async read(author: string): Promise<PostList> {
-    return await this.postRepository.findByAuthor(author);
+  static fromPrimitives(primitives: ReturnType<typeof Post.prototype.toPrimitives>[]) {
+    return new Blog(primitives.map(Post.fromPrimitives));
   }
 
+  post(post: Post) {
+    this.posts.push(post);
+  }
+
+  getNewerPosts(author: string): Post[] {
+    return this.posts
+      .filter(post => post.author === author)
+      .sort((a, b) => b.date.getTime() - a.date.getTime());
+  }
+
+  toPrimitives() {
+    const primitives = this.posts.map(post => post.toPrimitives());
+    return primitives;
+  }
 }

@@ -9,15 +9,19 @@ export class BlogDAO implements Persistence {
     this.ensureDirectoryExistence(BlogDAO.storagePath);
   }
   async persist(blog: Blog): Promise<void> {
-    const data = JSON.stringify(blog);
+    const data = JSON.stringify(blog.toPrimitives());
     const filename = `${BlogDAO.storagePath}/blog.json`;
     fs.writeFileSync(filename, data, "utf8");
   }
 
   async get(): Promise<Blog> {
-    const filename = `${BlogDAO.storagePath}/blog.json`;
-    const data = fs.readFileSync(filename, "utf8");
-    return Blog.fromPrimitives(JSON.parse(data));
+    try {
+      const filename = `${BlogDAO.storagePath}/blog.json`;
+      const data = fs.readFileSync(filename, "utf8");
+      return Blog.fromPrimitives(JSON.parse(data));
+    } catch (error) {
+      return new Blog();
+    }
   }
 
   private ensureDirectoryExistence(dirname: string) {

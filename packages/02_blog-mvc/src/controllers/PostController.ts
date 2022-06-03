@@ -6,6 +6,7 @@ export class PostController {
   async post(author: string, content: string) {
     const blog = await this.dao.get();
     blog.post(new Post(author, content));
+    await this.dao.persist(blog);
   }
 }
 

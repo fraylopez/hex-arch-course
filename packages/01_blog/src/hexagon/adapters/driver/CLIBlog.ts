@@ -1,6 +1,5 @@
 import * as readline from "readline-sync";
 import { Post } from "../../application/Post";
-import { PostList } from "../../application/PostList";
 import { ForPosting } from "../../ports/driver/ForPosting";
 export class CLIBlog {
 
@@ -38,7 +37,7 @@ export class CLIBlog {
   private read(onSuccess: () => void, onError: (err: Error) => void) {
     const author = readline.question("From whom?");
     this.blog.read(author)
-      .then((posts: PostList) => posts
+      .then((posts: Post[]) => posts
         .map((post: Post) =>
           console.log(`
           ${post.author} said:

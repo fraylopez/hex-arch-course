@@ -15,6 +15,6 @@ export class BlogController {
   }
 
   async read(author: string) {
-    return await this.readController.read(author);
+    return this.readController.read(author);
   }
 }
