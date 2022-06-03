@@ -1,5 +1,5 @@
-import { Account } from "../../domain/Account";
-import { AccountRepository } from "../../domain/AccountRepository";
+import { Account } from "../../application/Account";
+import { AccountRepository } from "../../application/AccountRepository";
 
 export class MemoryAccountRepository implements AccountRepository {
   private accounts: Account[] = [];

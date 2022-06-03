@@ -18,6 +18,10 @@ export class Blog {
       .sort((a, b) => b.date.getTime() - a.date.getTime());
   }
 
+  get size() {
+    return this.posts.length;
+  }
+
   toPrimitives() {
     const primitives = this.posts.map(post => post.toPrimitives());
     return primitives;

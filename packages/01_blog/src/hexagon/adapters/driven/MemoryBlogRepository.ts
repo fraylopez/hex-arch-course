@@ -1,4 +1,3 @@
-import assert from "assert";
 import { Blog } from "../../application/Blog";
 import { BlogRepository } from "../../ports/driven/BlogRepository";
 
@@ -9,7 +8,6 @@ export class MemoryPostRepository implements BlogRepository {
     return Promise.resolve();
   }
   get(): Promise<Blog> {
-    assert(this.persistedBlog, "Blog is not persisted");
     return Promise.resolve(this.persistedBlog || new Blog());
   }
 }

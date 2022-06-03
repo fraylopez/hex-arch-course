@@ -1,6 +1,5 @@
 import assert from "assert";
 import * as uuid from 'uuid';
-import { IncompatibleCurrencyError } from "./IncompatibleCurrencyError";
 import { Money } from "./Money";
 
 export class Account {
@@ -23,12 +22,12 @@ export class Account {
   }
 
   withdraw(amount: Money) {
-    assert(amount.sameCurrency(this.balance), new IncompatibleCurrencyError());
+    assert(amount.sameCurrency(this.balance), new Error('Incompatible currency'));
     this.balance = this.balance.subtract(amount);
   }
 
   deposit(amount: Money) {
-    assert(amount.sameCurrency(this.balance), new IncompatibleCurrencyError());
+    assert(amount.sameCurrency(this.balance), new Error('Incompatible currency'));
     this.balance = this.balance.add(amount);
   }
 

@@ -1,5 +1,5 @@
 import * as fs from "fs";
-import { Account } from "../../domain/Account";
+import { Account } from "../../application/Account";
 import { AccountRepository } from "../../domain/AccountRepository";
 
 export class FileSystemAccountRepository implements AccountRepository {

@@ -1,9 +1,8 @@
-import { Account } from "../domain/Account";
-import { ForManagingAccounts } from "../domain/ForManagingAccounts";
-import { Money } from "../domain/Money";
-import { AccountRepository } from "../domain/AccountRepository";
-import { UnknownAccountError } from "../domain/UnknownAccountError";
+import { Account } from "./Account";
 import assert from "assert";
+import { AccountRepository } from "./AccountRepository";
+import { ForManagingAccounts } from "./ForManagingAccounts";
+import { Money } from "./Money";
 
 export class Bank implements ForManagingAccounts {
   constructor(private readonly accountRepository: AccountRepository) { }
@@ -15,7 +14,7 @@ export class Bank implements ForManagingAccounts {
   }
   async find(accountId: string): Promise<Account> {
     const account = await this.accountRepository.find(accountId);
-    assert(account, new UnknownAccountError(accountId));
+    assert(account, new Error(`Unknown account ${accountId}`));
     return account;
   }
   async deposit(accountId: string, amount: number, currency: string): Promise<void> {

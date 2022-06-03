@@ -1,6 +1,6 @@
-import { PostList } from "../../application/Blog";
+import { Post } from "../../application/Post";
 
 export interface ForPosting {
   post(author: string, content: string): Promise<void>;
-  read(author: string): Promise<PostList>;
+  read(author: string): Promise<Post[]>;
 }

@@ -2,10 +2,9 @@
 import chai, { expect } from "chai";
 import { MemoryAccountRepository } from "../src/hexagon/adapters/secondary/MemoryAccountRepository";
 import { Bank } from "../src/hexagon/application/Bank";
-import { ForManagingAccounts } from "../src/hexagon/domain/ForManagingAccounts";
-import { IncompatibleCurrencyError } from "../src/hexagon/domain/IncompatibleCurrencyError";
-import { Money } from "../src/hexagon/domain/Money";
 import chaiAsPromised from "chai-as-promised";
+import { ForManagingAccounts } from "../src/hexagon/application/ForManagingAccounts";
+import { Money } from "../src/hexagon/application/Money";
 
 chai.use(chaiAsPromised);
 
@@ -31,7 +30,7 @@ describe('Bank TestAdapter', () => {
   it('should reject deposit other currency amount', async () => {
     const accountId = await testAdapter.create('John', "EUR");
     await expect(testAdapter.deposit(accountId, 100, "USD"))
-      .to.be.rejectedWith(IncompatibleCurrencyError);
+      .to.be.rejectedWith(Error, 'Incompatible currency');
   });
 
   it('should witdraw same currency amount', async () => {
@@ -45,7 +44,7 @@ describe('Bank TestAdapter', () => {
   it('should reject withdraw other currency amount', async () => {
     const accountId = await testAdapter.create('John', "EUR");
     await expect(testAdapter.withdraw(accountId, 99, "USD"))
-      .to.be.rejectedWith(IncompatibleCurrencyError);
+      .to.be.rejectedWith(Error, 'Incompatible currency');
   });
 
   it.skip('should reject withdraw more than balance', async () => {

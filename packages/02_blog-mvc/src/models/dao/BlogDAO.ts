@@ -11,13 +11,13 @@ export class BlogDAO implements Persistence {
   async persist(blog: Blog): Promise<void> {
     const data = JSON.stringify(blog.toPrimitives());
     const filename = `${BlogDAO.storagePath}/blog.json`;
-    fs.writeFileSync(filename, data, "utf8");
+    await fs.promises.writeFile(filename, data, "utf8");
   }
 
   async get(): Promise<Blog> {
     try {
       const filename = `${BlogDAO.storagePath}/blog.json`;
-      const data = fs.readFileSync(filename, "utf8");
+      const data = await fs.promises.readFile(filename, "utf8");
       return Blog.fromPrimitives(JSON.parse(data));
     } catch (error) {
       return new Blog();

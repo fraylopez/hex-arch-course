@@ -1,5 +1,5 @@
 import * as readline from "readline-sync";
-import { Account } from "../../domain/Account";
+import { Account } from "../../application/Account";
 import { DomainError } from "../../domain/DomainError";
 import { ForManagingAccounts } from "../../domain/ForManagingAccounts";
 export class CLIView {

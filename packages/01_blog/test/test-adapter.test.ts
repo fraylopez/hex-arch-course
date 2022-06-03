@@ -16,14 +16,14 @@ describe('Blog TestAdapter', () => {
   it('should store a post', async () => {
     await testAdapter.post('John', "Hellow blog");
     const posts = await testAdapter.read('John');
-    expect(posts.head()?.content).to.equal("Hellow blog");
+    expect(posts.pop()?.content).to.equal("Hellow blog");
   });
 
   it('should retrieve all author posts ', async () => {
     await testAdapter.post('John', "Hellow blog");
     await testAdapter.post('John', "Hellow blog 2");
     const posts = await testAdapter.read('John');
-    expect(posts.count).eq(2);
+    expect(posts.length).eq(2);
   });
 
   it('should retrieve all author posts sorted by descending date', async () => {
@@ -31,6 +31,6 @@ describe('Blog TestAdapter', () => {
     await new Promise(resolve => setTimeout(resolve, 10));
     await testAdapter.post('John', "Hellow blog 2");
     const posts = await testAdapter.read('John');
-    expect(posts.head()!.date).to.be.greaterThan(posts.tail()!.date);
+    expect(posts.shift()!.date).to.be.greaterThan(posts.pop()!.date);
   });
 });
