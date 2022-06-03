@@ -8,7 +8,7 @@ export class AccountCreatedEvent extends DomainEvent {
   }
 
   static fromPrimitives(primitives: ReturnType<typeof AccountCreatedEvent.prototype.toPrimitives>): AccountCreatedEvent {
-    return new AccountCreatedEvent(data['accountId'], data['currency']);
+    return new AccountCreatedEvent(primitives['accountId'], primitives['currency']);
   }
 
   toPrimitives() {
