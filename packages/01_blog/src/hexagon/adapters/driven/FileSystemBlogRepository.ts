@@ -10,12 +10,12 @@ export class FileSystemBlogRepository implements BlogRepository {
   async update(blog: Blog): Promise<void> {
     const data = JSON.stringify(blog.toPrimitives());
     const filename = `${FileSystemBlogRepository.storagePath}/blog.json`;
-    fs.writeFileSync(filename, data, "utf8");
+    await fs.promises.writeFile(filename, data, "utf8");
   }
 
   async get(): Promise<Blog> {
     try {
-      const content = fs.readFileSync(`${FileSystemBlogRepository.storagePath}/blog.json`, "utf8");
+      const content = await fs.promises.readFile(`${FileSystemBlogRepository.storagePath}/blog.json`, "utf8");
       return Blog.fromPrimitives(JSON.parse(content));
     } catch (error) {
       return new Blog();
