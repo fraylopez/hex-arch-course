@@ -1,12 +1,12 @@
-import { CreateUserController } from "./controllers/CreateUserController";
-import { UserDAO } from "./models/dao/UserDAO";
+import { PostController } from "./controllers/PostController";
+import { PostDAO } from "./models/dao/BlogDAO";
 import { View } from "./views/View";
-import { CLICreateUserView } from "./views/CLICreateUserView";
+import { CLICreateUserView } from "./views/CLIBlog";
 class App {
   private readonly view: View;
   constructor() {
-    const userDAO = new UserDAO();
-    const controller = new CreateUserController(userDAO);
+    const userDAO = new PostDAO();
+    const controller = new PostController(userDAO);
     this.view = new CLICreateUserView(controller);
   }
 

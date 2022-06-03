@@ -1,6 +1,6 @@
 import { Post } from "../../application/Post";
 import { PostList } from "../../application/PostList";
-import { PostRepository } from "../../ports/secondary/PostRepository";
+import { PostRepository } from "../../ports/driven/PostRepository";
 
 export class MemoryPostRepository implements PostRepository {
   private posts: Post[] = [];

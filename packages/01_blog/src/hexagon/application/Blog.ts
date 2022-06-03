@@ -1,5 +1,5 @@
-import { ForPosting as ForPosting } from "../ports/primary/ForPosting";
-import { PostRepository as PostRepository } from "../ports/secondary/PostRepository";
+import { ForPosting as ForPosting } from "../ports/driver/ForPosting";
+import { PostRepository as PostRepository } from "../ports/driven/PostRepository";
 import { Post } from "./Post";
 import { PostList } from "./PostList";
 

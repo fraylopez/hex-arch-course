@@ -2,7 +2,7 @@
 import { expect } from "chai";
 import { MemoryPostRepository } from "../src/hexagon/adapters/driven/MemoryPostRepository";
 import { Blog } from "../src/hexagon/application/Blog";
-import { ForPosting } from "../src/hexagon/ports/primary/ForPosting";
+import { ForPosting } from "../src/hexagon/ports/driver/ForPosting";
 
 describe('Blog TestAdapter', () => {
   let testAdapter: ForPosting;
@@ -17,10 +17,14 @@ describe('Blog TestAdapter', () => {
     expect(posts.pop()?.content).to.equal("Hellow blog");
   });
 
-  it('should retrieve all author posts sorted by descending date', async () => {
+  it('should retrieve all author posts ', async () => {
     await testAdapter.post('John', "Hellow blog");
     await testAdapter.post('John', "Hellow blog 2");
     const posts = await testAdapter.read('John');
     expect(posts).to.have.lengthOf(2);
+  });
+
+  it('should retrieve all author posts sorted by descending date', async () => {
+    // TODO: implement
   });
 });

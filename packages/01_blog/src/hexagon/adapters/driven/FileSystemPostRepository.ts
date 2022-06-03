@@ -1,4 +1,4 @@
-import { PostRepository } from "../../ports/secondary/PostRepository";
+import { PostRepository } from "../../ports/driven/PostRepository";
 import * as fs from "fs";
 import { Post } from "../../application/Post";
 import { PostList } from "../../application/PostList";

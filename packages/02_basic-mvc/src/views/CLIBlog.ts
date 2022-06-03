@@ -1,11 +1,10 @@
 import * as readline from "readline-sync";
-import { Post } from "../../application/Post";
-import { PostList } from "../../application/PostList";
-import { ForPosting } from "../../ports/driver/ForPosting";
-export class CLIBlog {
-
+import { BlogController } from "../controllers/BlogController";
+import { Post } from "../models/Post";
+import { View } from "./View";
+export class CLIBlogView implements View {
   private readonly options: Array<(onSuccess: () => void, onError: (err: Error) => void) => void>;
-  constructor(private readonly blog: ForPosting) {
+  constructor(private readonly blogController: BlogController) {
     this.options = [
       this.post.bind(this),
       this.read.bind(this),
@@ -27,7 +26,7 @@ export class CLIBlog {
   private post(onSuccess: () => void, onError: (err: Error) => void) {
     const author = readline.question("Name?");
     const content = readline.question("What are yout thinking?");
-    this.blog.post(author, content)
+    this.blogController.post(author, content)
       .then(() => {
         console.log("Your post was published!");
       })
@@ -37,8 +36,8 @@ export class CLIBlog {
 
   private read(onSuccess: () => void, onError: (err: Error) => void) {
     const author = readline.question("From whom?");
-    this.blog.read(author)
-      .then((posts: PostList) => posts
+    this.blogController.read(author)
+      .then((posts: Post[]) => posts
         .map((post: Post) =>
           console.log(`
           ${post.author} said:
