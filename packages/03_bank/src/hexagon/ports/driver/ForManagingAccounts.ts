@@ -1,4 +1,4 @@
-import { Account } from "./Account";
+import { Account } from "../../application/Account";
 
 export interface ForManagingAccounts {
   create(name: string, currency: string): Promise<string>;

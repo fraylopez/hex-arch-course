@@ -1,5 +1,5 @@
 import { Account } from "../../application/Account";
-import { AccountRepository } from "../../application/AccountRepository";
+import { AccountRepository } from "../../ports/driven/AccountRepository";
 
 export class MemoryAccountRepository implements AccountRepository {
   private accounts: Account[] = [];

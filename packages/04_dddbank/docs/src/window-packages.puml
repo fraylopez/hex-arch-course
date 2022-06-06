@@ -26,8 +26,8 @@ window --> accounting.domain
 accounting.application --> accounting.domain
 accounting.infrastructure ..|> accounting.domain
 
-accounting --> core
-accounting --> shared
+accounting --> core.domain
+accounting --> shared.domain
 
 core.infrastructure ..|> core.domain
 shared.infrastructure ..|> shared.domain

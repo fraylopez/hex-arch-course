@@ -1,7 +1,6 @@
 import * as readline from "readline-sync";
 import { Account } from "../../application/Account";
-import { DomainError } from "../../domain/DomainError";
-import { ForManagingAccounts } from "../../domain/ForManagingAccounts";
+import { ForManagingAccounts } from "../../ports/driver/ForManagingAccounts";
 export class CLIView {
   private readonly options: Array<(onSuccess: () => void, onError: (err: Error) => void) => void>;
   constructor(private readonly bank: ForManagingAccounts) {
@@ -22,8 +21,8 @@ export class CLIView {
     this.options[option - 1](this.render.bind(this), this.onError.bind(this));
   }
   private onError(err: Error) {
-    if (err instanceof DomainError) {
-      console.log(err.constructor.name);
+    if (err.message) {
+      console.log(err.message);
     }
     else {
       console.log("Something failed, try again...");

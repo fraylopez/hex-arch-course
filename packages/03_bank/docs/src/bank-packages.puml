@@ -1,0 +1,29 @@
+@startuml
+package index {}
+
+package hexagon {
+
+  package ports{
+    package ports.driver{}
+    package ports.driven{}
+  }
+  package application {  }
+
+
+    package adapters.driver{}
+    package adapters.driven{}
+  }
+
+}
+
+index --> application
+index --> adapters
+
+application ..|> ports.driver
+application --> ports.driven
+
+adapters.driver ..|> ports.driver
+adapters.driven ..|> ports.driven
+
+
+@enduml

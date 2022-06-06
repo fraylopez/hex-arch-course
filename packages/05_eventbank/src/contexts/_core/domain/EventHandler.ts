@@ -1,5 +1,4 @@
 import { DomainEvent } from "./DomainEvent";
+import { MessageHandler } from "./MessageHandler";
 
-export interface EventHandler<T extends DomainEvent> {
-  handle(event: T): Promise<void>;
-}
+export type EventHandler<T extends DomainEvent = DomainEvent> = MessageHandler<T>;

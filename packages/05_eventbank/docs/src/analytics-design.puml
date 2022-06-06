@@ -1,0 +1,44 @@
+class AnalyticsApp {
+  bind()
+ }
+
+class AnalyticsCLIView {
+  render()
+}
+
+AnalyticsApp *--> AnalyticsCLIView
+AnalyticsApp *--> Tracker
+AnalyticsApp --> TrackOnAccountCreatedEventHandler
+AnalyticsApp --> EventBus
+
+class MemoryEventBus implements EventBus{}
+
+interface EventBus {
+  publish(event: DomainEvent): void
+}
+
+abstract class DomainEvent{}
+
+class TrackOnAccountCreatedEventHandler {}
+class Tracker {}
+
+
+EventBus ..> DomainEvent
+AccountCreatedEvent ..|> DomainEvent
+TrackOnAccountCreatedEventHandler --> AccountCreatedEvent
+TrackOnAccountCreatedEventHandler *--> Tracker
+Tracker --> AnalyticsAccount
+Tracker --> AnalyticsAccountRepository
+
+interface AnalyticsAccountRepository {
+  create(account: Account): Promise<void>;
+  update(account: Account): Promise<void>;
+  find(accountId: string): Promise<Account | null>;
+}
+
+class MemoryAnalyticsAccountRepository implements AnalyticsAccountRepository
+class FileAnalyticsAccountRepository implements AnalyticsAccountRepository
+
+class AnalyticsAccount {
+  addOperation()
+}

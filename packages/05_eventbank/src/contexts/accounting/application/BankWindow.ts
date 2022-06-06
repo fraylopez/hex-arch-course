@@ -5,9 +5,13 @@ import { AccountRepository } from "../domain/AccountRepository";
 import { UnknownAccountError } from "../domain/UnknownAccountError";
 import assert from "assert";
 import { ForExistingAccountsOperation } from "../domain/ForAccountsInteraction";
+import { EventBus } from "../../_core/domain/EventBus";
 
 export class BankWindow implements ForCreatingAccounts, ForExistingAccountsOperation {
-  constructor(private readonly accountRepository: AccountRepository) { }
+  constructor(
+    private readonly accountRepository: AccountRepository,
+    private readonly eventBus: EventBus,
+  ) { }
 
   async create(name: string, currency: string): Promise<string> {
     const account = Account.create(name, currency);

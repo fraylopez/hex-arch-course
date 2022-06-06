@@ -1,4 +1,4 @@
-import { Account } from "./Account";
+import { Account } from "../../application/Account";
 
 export interface AccountRepository {
   create(account: Account): Promise<void>;

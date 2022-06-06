@@ -1,8 +1,8 @@
-import { CLIView } from "./hexagon/adapters/primary/CLIView";
-import { FileSystemAccountRepository } from "./hexagon/adapters/secondary/FileSystemAccountRepository";
+import { CLIView } from "./hexagon/adapters/driver/CLIView";
+import { FileSystemAccountRepository } from "./hexagon/adapters/driven/FileSystemAccountRepository";
 import { Bank } from "./hexagon/application/Bank";
-import { AccountRepository } from "./hexagon/domain/AccountRepository";
-import { ForManagingAccounts } from "./hexagon/domain/ForManagingAccounts";
+import { AccountRepository } from "./hexagon/ports/driven/AccountRepository";
+import { ForManagingAccounts } from "./hexagon/ports/driver/ForManagingAccounts";
 
 const repositoryAdapter: AccountRepository = new FileSystemAccountRepository();
 const hexagon: ForManagingAccounts = new Bank(repositoryAdapter);

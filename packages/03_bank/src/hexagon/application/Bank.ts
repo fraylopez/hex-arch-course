@@ -1,7 +1,7 @@
 import { Account } from "./Account";
 import assert from "assert";
-import { AccountRepository } from "./AccountRepository";
-import { ForManagingAccounts } from "./ForManagingAccounts";
+import { AccountRepository } from "../ports/driven/AccountRepository";
+import { ForManagingAccounts } from "../ports/driver/ForManagingAccounts";
 import { Money } from "./Money";
 
 export class Bank implements ForManagingAccounts {

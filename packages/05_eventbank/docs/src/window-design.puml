@@ -1,35 +1,53 @@
-@startuml
-package apps {
-  package window{}
+class WindowApp { }
+
+class WindowCLIView {
+  render()
 }
 
-package contexts {
-   package shared{
-    package shared.domain{}
-    package shared.infrastructure{}
-  }
-  package core{
-    package core.domain{}
-    package core.infrastructure{}
-  }
-
-  package accounting{
-    package accounting.domain{}
-    package accounting.application{}
-    package accounting.infrastructure{}
-  }
+interface EventBus {
+  publish(event: DomainEvent): void
 }
 
-window --> accounting.infrastructure
-window --> accounting.application
-window --> accounting.domain
-accounting.application --> accounting.domain
-accounting.infrastructure ..|> accounting.domain
+abstract class DomainEvent{}
+EventBus ..> DomainEvent
 
-accounting --> core
-accounting --> shared
+interface ForCreatingAccounts{
+  create(name: string, currency: string): Promise<string>;
+}
+interface ForExistingAccountsOperation {
+  find(accountId: string): Promise<Account>;
+  deposit(accountId: string, amount: number, currency: string): Promise<void>;
+  withdraw(accountId: string, amount: number, currency: string): Promise<void>;
+}
 
-core.infrastructure ..|> core.domain
-shared.infrastructure ..|> shared.domain
+WindowApp *--> WindowCLIView
+WindowApp *--> ForCreatingAccounts
+WindowApp *--> ForExistingAccountsOperation
+WindowApp *--> AccountRepository
+WindowApp *--> EventBus
 
-@enduml
+WindowCLIView --> ForCreatingAccounts
+WindowCLIView --> ForExistingAccountsOperation
+class BankWindow implements ForCreatingAccounts,ForExistingAccountsOperation
+
+interface AccountRepository {
+  create(account: Account): Promise<void>;
+  update(account: Account): Promise<void>;
+  find(accountId: string): Promise<Account | null>;
+}
+
+class MemoryAccountRepository implements AccountRepository
+class FileSystemAccountRepository implements AccountRepository
+
+BankWindow --> AccountRepository
+BankWindow --> Account
+BankWindow --> EventBus
+
+
+class Account {
+  deposit()
+  withdraw()
+  getBalance()
+}
+
+Account ..> DomainEvent

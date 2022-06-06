@@ -1,11 +1,3 @@
-import { ATMCLIView } from "./AnalyticsCLIView";
-import { AccountRepository } from "../../contexts/accounting/domain/AccountRepository";
-import { FileSystemAccountRepository } from "../../contexts/accounting/infrastructure/persistance/filesystem/FileSystemAccountRepository";
-import { ForExistingAccountsOperation } from "../../contexts/accounting/domain/ForAccountsInteraction";
-import { ATM } from "../../contexts/accounting/application/ATM";
+import { AnalyticsCLIApp } from "./AnalyticsApp";
 
-const repositoryAdapter: AccountRepository = new FileSystemAccountRepository();
-const hexagon: ForExistingAccountsOperation = new ATM(repositoryAdapter);
-const ui = new ATMCLIView(hexagon);
-
-ui.render();
+new AnalyticsCLIApp().run();

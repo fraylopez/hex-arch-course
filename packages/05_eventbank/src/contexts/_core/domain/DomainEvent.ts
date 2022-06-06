@@ -1,8 +1,10 @@
-export abstract class DomainEvent {
+import { Message } from "./Message";
+
+export abstract class DomainEvent implements Message {
   static fromPrimitives: (args: any) => DomainEvent;
-  readonly eventName: string;
+  readonly messageName: string;
   constructor() {
-    this.eventName = this.constructor.name;
+    this.messageName = this.constructor.name;
   }
   abstract toPrimitives(): object;
 }

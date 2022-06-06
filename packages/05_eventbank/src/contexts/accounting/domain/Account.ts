@@ -4,6 +4,8 @@ import { IncompatibleCurrencyError } from "./IncompatibleCurrencyError";
 import { Money } from "../../_shared/domain/Money";
 import { AggregateRoot } from "../../_core/domain/AggregateRoot";
 import { AccountCreatedEvent } from "./AccountCreatedEvent";
+import { DepositEvent } from "../../_shared/domain/DepositEvent";
+import { WithdrawalEvent } from "../../_shared/domain/WithdrawalEvent";
 
 export class Account extends AggregateRoot {
   private constructor(
@@ -31,11 +33,13 @@ export class Account extends AggregateRoot {
   withdraw(amount: Money) {
     assert(amount.sameCurrency(this.balance), new IncompatibleCurrencyError());
     this.balance = this.balance.subtract(amount);
+    this.onChange(new WithdrawalEvent(this.id, amount));
   }
 
   deposit(amount: Money) {
     assert(amount.sameCurrency(this.balance), new IncompatibleCurrencyError());
     this.balance = this.balance.add(amount);
+    this.onChange(new DepositEvent(this.id, amount));
   }
 
   getBalance() {
@@ -50,4 +54,5 @@ export class Account extends AggregateRoot {
     };
   }
 }
+
 

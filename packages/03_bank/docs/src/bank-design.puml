@@ -1,0 +1,32 @@
+class CLIView {
+  render()
+}
+
+interface ForManagingAccounts {
+  create(name: string, currency: string): Promise<string>;
+  find(accountId: string): Promise<Account>;
+  deposit(accountId: string, amount: number, currency: string): Promise<void>;
+  withdraw(accountId: string, amount: number, currency: string): Promise<void>;
+}
+
+CLIView --> ForManagingAccounts
+class Bank implements ForManagingAccounts
+
+interface AccountRepository {
+  create(account: Account): Promise<void>;
+  update(account: Account): Promise<void>;
+  find(accountId: string): Promise<Account | null>;
+}
+
+class MemoryAccountRepository implements AccountRepository
+class FileSystemAccountRepository implements AccountRepository
+
+Bank --> AccountRepository
+Bank --> Account
+
+
+class Account {
+  deposit()
+  withdraw()
+  getBalance()
+}
