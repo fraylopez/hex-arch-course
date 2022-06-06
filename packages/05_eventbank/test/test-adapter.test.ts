@@ -53,7 +53,7 @@ describe(`${TestUtils.getPackagePath(__dirname)}`, () => {
       it('should emit a DepositEvent event on deposit', async () => {
         const accountId = await testAdapter.create('John', "EUR");
         await testAdapter.deposit(accountId, 100, "EUR");
-        sinon.assert.calledWith(eventBus.publish, sinon.match.instanceOf(DepositEvent));
+        TestUtils.assertStubCalledWithInstanceOf(eventBus.publish, DepositEvent);
       });
 
       it('should reject deposit other currency amount', async () => {
@@ -73,7 +73,7 @@ describe(`${TestUtils.getPackagePath(__dirname)}`, () => {
       it('should emit a WithdrawalEvent event on withdraw', async () => {
         const accountId = await testAdapter.create('John', "EUR");
         await testAdapter.withdraw(accountId, 99, "EUR");
-        sinon.assert.calledWith(eventBus.publish, sinon.match.instanceOf(WithdrawalEvent));
+        TestUtils.assertStubCalledWithInstanceOf(eventBus.publish, WithdrawalEvent);
       });
 
       it('should reject withdraw other currency amount', async () => {
@@ -105,7 +105,7 @@ describe(`${TestUtils.getPackagePath(__dirname)}`, () => {
       it('should emit a DepositEvent event on deposit', async () => {
         const accountId = await creationTestAdapter.create('John', "EUR");
         await testAdapter.deposit(accountId, 100, "EUR");
-        sinon.assert.calledWith(eventBus.publish, sinon.match.instanceOf(DepositEvent));
+        TestUtils.assertStubCalledWithInstanceOf(eventBus.publish, DepositEvent);
       });
 
       it('should reject deposit other currency amount', async () => {
@@ -131,7 +131,7 @@ describe(`${TestUtils.getPackagePath(__dirname)}`, () => {
       it('should emit a WithdrawalEvent event on withdraw', async () => {
         const accountId = await creationTestAdapter.create('John', "EUR");
         await testAdapter.withdraw(accountId, 99, "EUR");
-        sinon.assert.calledWith(eventBus.publish, sinon.match.instanceOf(WithdrawalEvent));
+        TestUtils.assertStubCalledWithInstanceOf(eventBus.publish, WithdrawalEvent);
       });
     });
 

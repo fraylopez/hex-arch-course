@@ -16,6 +16,7 @@ export class BankWindow implements ForCreatingAccounts, ForExistingAccountsOpera
   async create(name: string, currency: string): Promise<string> {
     const account = Account.create(name, currency);
     await this.accountRepository.create(account);
+    this.eventBus.publish(account.getUncommitedChanges());
     return account.id;
   }
   async find(accountId: string): Promise<Account> {
@@ -27,10 +28,12 @@ export class BankWindow implements ForCreatingAccounts, ForExistingAccountsOpera
     const account = await this.find(accountId);
     account.deposit(new Money(amount, currency));
     await this.accountRepository.update(account);
+    this.eventBus.publish(account.getUncommitedChanges());
   }
   async withdraw(accountId: string, amount: number, currency: string): Promise<void> {
     const account = await this.find(accountId);
     account.withdraw(new Money(amount, currency));
     await this.accountRepository.update(account);
+    this.eventBus.publish(account.getUncommitedChanges());
   }
 }

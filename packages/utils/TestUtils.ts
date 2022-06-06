@@ -1,4 +1,5 @@
 import axios from "axios";
+import sinon, { SinonStub } from "sinon";
 export class TestUtils {
   static getPackagePath(dirname: string) {
     const path = this.getPath(dirname);
@@ -20,6 +21,16 @@ export class TestUtils {
       data: body,
       headers: { "Content-Type": "application/json" }
     });
+  }
+
+  static assertStubCalledWithInstanceOf(stub: SinonStub, eventKlass: any, times: number = 1) {
+    sinon.assert.calledWith(
+      stub,
+      sinon.match((args: any | any[]) => {
+        const arrayOfArgs = Array.isArray(args) ? args : [args];
+        return arrayOfArgs.filter(e => e instanceof eventKlass).length === times;
+      })
+    );
   }
 
   private static getPath(dirname: string) {
