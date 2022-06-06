@@ -8,8 +8,8 @@ export class TrackOnAccountCreatedEventHandler implements EventHandler<AccountCr
   constructor(analyticsRepository: AnalyticsRepository) {
     this.tacker = new Tracker(analyticsRepository);
   }
-  getTopic(): string {
-    return AccountCreatedEvent.name;
+  getSubscriptions() {
+    return [AccountCreatedEvent];
   }
   async handle(event: AccountCreatedEvent): Promise<void> {
     await this.tacker.trackNewAccount(event.accountId, event.currency);

@@ -14,7 +14,7 @@ export class DepositEvent extends DomainEvent {
     return new DepositEvent(args.accountId, Money.fromPrimitives(args.amount));
   }
 
-  toPrimitives(): object {
+  getPrimitivePayload(): object {
     return {
       accountId: this.accountId,
       amount: this.amount.toPrimitives(),

@@ -1,12 +1,13 @@
-/* eslint-disable max-classes-per-file */
 import { BankWindow } from "../../contexts/accounting/application/BankWindow";
 import { AccountRepository } from "../../contexts/accounting/domain/AccountRepository";
 import { ForExistingAccountsOperation } from "../../contexts/accounting/domain/ForAccountsInteraction";
 import { ForCreatingAccounts } from "../../contexts/accounting/domain/ForCreatingAccounts";
 import { MemoryAccountRepository } from "../../contexts/accounting/infrastructure/persistance/memory/MemoryAccountRepository";
-import { ExpressServer } from "../_core/ExpressServer";
 import { EventBusFactory } from "../_shared/SharedServices";
-
+import { ExpressServer } from "../_core/http/express/ExpressServer";
+import { CreateAccountPostController } from "./routes/CreateAccountPostController";
+import { DepositPostController } from "./routes/DepositPostController";
+import { AccountGetController } from "./routes/AccountGetController";
 
 export class BankAPI {
   private server!: ExpressServer;
@@ -33,15 +34,14 @@ export class BankAPI {
 
   private bindHttp(hexagon: ForCreatingAccounts & ForExistingAccountsOperation) {
     this.server = new ExpressServer(3000);
-
-    this.server.addRoute("post", "/accounts", (req, res) => {
-      hexagon.create(req.body.name, req.body.currency)
-        .then(id => res.send({ id }))
-        .catch(err => res.status(500).send({ error: err.message }));
-    });
+    [
+      new CreateAccountPostController(hexagon),
+      new AccountGetController(hexagon),
+      new DepositPostController(hexagon),
+    ]
+      .forEach(controller => this.server.addRouteController(controller));
   }
-
-
 }
+
 
 

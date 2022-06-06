@@ -1,7 +1,6 @@
 import express from "express";
 import http from "http";
-
-type HttpMethod = "get" | "post" | "put" | "delete";
+import { ExpressController } from "./ExpressController";
 
 export class ExpressServer {
   private readonly http: http.Server;
@@ -12,8 +11,11 @@ export class ExpressServer {
     this.http = http.createServer(this.router);
   }
 
-  public addRoute(method: HttpMethod, route: string, handler: express.RequestHandler) {
-    this.router[method](route, handler);
+  public addRouteController(controller: ExpressController) {
+    this.router[controller.method](
+      controller.route,
+      controller.requestHandler.bind(controller) as any
+    );
   }
 
   public start() {

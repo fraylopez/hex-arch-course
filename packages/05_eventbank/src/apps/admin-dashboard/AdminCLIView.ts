@@ -1,5 +1,5 @@
 import * as readline from "readline-sync";
-import { DomainError } from "../../contexts/accounting/domain/DomainError";
+import { DomainError } from "../../contexts/_core/domain/DomainError";
 import { AdminAccount } from "../../contexts/administration/domain/AdminAccount";
 import { ForAccountAdministration } from "../../contexts/administration/domain/ForAccountAdministration";
 export class AdminCLIView {

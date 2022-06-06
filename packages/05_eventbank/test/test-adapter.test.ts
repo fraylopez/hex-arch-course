@@ -21,7 +21,7 @@ import { MemoryEventBus } from "../src/contexts/_core/infrastructure/bus/memory/
 chai.use(chaiAsPromised);
 
 describe(`${TestUtils.getPackagePath(__dirname)}`, () => {
-  describe('DDDBank TestAdapter', () => {
+  describe('EventBank TestAdapter', () => {
     let sandbox: SinonSandbox;
     let eventBus: SinonStubbedInstance<EventBus>;
     before(() => {
@@ -48,6 +48,7 @@ describe(`${TestUtils.getPackagePath(__dirname)}`, () => {
         await testAdapter.deposit(accountId, 100, "EUR");
         const account = await testAdapter.find(accountId);
         expect(account.getBalance()).to.deep.equal(new Money(100, "EUR"));
+        await new Promise((resolve) => setTimeout(resolve, 1000));
       });
 
       it('should emit a DepositEvent event on deposit', async () => {

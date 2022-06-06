@@ -1,5 +1,5 @@
 import * as readline from "readline-sync";
-import { DomainError } from "../../contexts/accounting/domain/DomainError";
+import { DomainError } from "../../contexts/_core/domain/DomainError";
 import { Tracker } from "../../contexts/analytics/application/Tracker";
 import { AnalyticsAccount } from "../../contexts/analytics/domain/AnalyticsAccount";
 export class AnalyticsCLIView {

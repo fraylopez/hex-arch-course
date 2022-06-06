@@ -1,6 +1,6 @@
 import * as readline from "readline-sync";
 import { Account } from "../../contexts/accounting/domain/Account";
-import { DomainError } from "../../contexts/accounting/domain/DomainError";
+import { DomainError } from "../../contexts/_core/domain/DomainError";
 import { ForExistingAccountsOperation } from "../../contexts/accounting/domain/ForAccountsInteraction";
 import { ForCreatingAccounts } from "../../contexts/accounting/domain/ForCreatingAccounts";
 export class WindowCLIView {

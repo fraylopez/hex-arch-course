@@ -14,7 +14,7 @@ export class WithdrawalEvent extends DomainEvent {
     return new WithdrawalEvent(args.accountId, Money.fromPrimitives(args.amount));
   }
 
-  toPrimitives(): object {
+  getPrimitivePayload(): object {
     return {
       accountId: this.accountId,
       amount: this.amount.toPrimitives(),
