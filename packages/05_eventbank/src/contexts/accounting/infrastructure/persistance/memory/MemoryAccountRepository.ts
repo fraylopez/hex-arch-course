@@ -22,4 +22,8 @@ export class MemoryAccountRepository implements AccountRepository {
     const stored = await this.memoryRepository.find(accountId);
     return Account.fromPrimitives(stored!);
   }
+
+  async __deleteAll(): Promise<void> {
+    return this.memoryRepository.clear();
+  }
 }

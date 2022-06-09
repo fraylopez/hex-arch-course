@@ -12,13 +12,13 @@ export class DomainEventMapper {
   }
   subscribe(handler: EventHandler): void {
     handler.getSubscriptions().forEach(klass =>
-      this.events.set(klass.NAME, klass)
+      this.events.set(klass.name, klass)
     );
     const eventKlasses = handler.getSubscriptions();
     eventKlasses.forEach(eventKlass => {
-      const handlersForEvent = this.handlers.get(eventKlass.NAME);
+      const handlersForEvent = this.handlers.get(eventKlass.name);
       if (!handlersForEvent) {
-        this.handlers.set(eventKlass.NAME, [handler]);
+        this.handlers.set(eventKlass.name, [handler]);
       } else {
         handlersForEvent.push(handler);
       }

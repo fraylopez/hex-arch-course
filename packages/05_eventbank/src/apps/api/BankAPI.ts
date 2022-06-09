@@ -28,7 +28,7 @@ export class BankAPI {
   private bindHexagon() {
     this.repositoryAdapter = new MemoryAccountRepository();
     const hexagon: ForCreatingAccounts & ForExistingAccountsOperation =
-      new BankWindow(this.repositoryAdapter, EventBusFactory.get("memory"));
+      new BankWindow(this.repositoryAdapter, EventBusFactory.get());
     return hexagon;
   }
 

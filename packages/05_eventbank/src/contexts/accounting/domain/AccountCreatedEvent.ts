@@ -1,19 +1,17 @@
-import { DomainEvent } from "../../_core/domain/DomainEvent";
+import { DomainEvent, DomainEventPrimitives } from "../../_core/domain/DomainEvent";
 
 
 export class AccountCreatedEvent extends DomainEvent {
-  static NAME = 'AccountCreatedEvent';
   constructor(public readonly accountId: string, public readonly currency: string) {
-    super();
+    super(AccountCreatedEvent.name, accountId);
   }
 
-  static fromPrimitives(primitives: ReturnType<typeof AccountCreatedEvent.prototype.getPrimitivePayload>): AccountCreatedEvent {
-    return new AccountCreatedEvent(primitives['accountId'], primitives['currency']);
+  static fromPrimitives(primitives: DomainEventPrimitives<AccountCreatedEvent>) {
+    return new AccountCreatedEvent(primitives.aggregateId, primitives.payload.currency);
   }
 
   getPrimitivePayload() {
     return {
-      accountId: this.accountId,
       currency: this.currency,
     };
   }

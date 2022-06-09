@@ -12,6 +12,7 @@ import { ForExistingAccountsOperation } from "../src/contexts/accounting/domain/
 import { ATM } from "../src/contexts/accounting/application/ATM";
 import { MemoryAdminAccountRepository } from "../src/contexts/administration/infrastructure/persistence/memory/MemoryAdminAccountRepository";
 import { TestUtils } from "../../utils/TestUtils";
+import { AccountRepository } from "../src/contexts/accounting/domain/AccountRepository";
 
 chai.use(chaiAsPromised);
 
@@ -64,9 +65,11 @@ describe(`${TestUtils.getPackagePath(__dirname)}`, () => {
     describe('ATM', () => {
       let creationTestAdapter: ForCreatingAccounts;
       let testAdapter: ForExistingAccountsOperation;
+      let repository: AccountRepository;
       before(() => {
-        creationTestAdapter = new BankWindow(new MemoryAccountRepository());
-        testAdapter = new ATM(new MemoryAccountRepository());
+        repository = new MemoryAccountRepository();
+        creationTestAdapter = new BankWindow(repository);
+        testAdapter = new ATM(repository);
       });
 
       it('should reject deposit other currency amount', async () => {

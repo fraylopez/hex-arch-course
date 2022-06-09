@@ -7,7 +7,7 @@ export class WithdrawalEvent extends DomainEvent {
     public readonly accountId: string,
     public readonly amount: Money
   ) {
-    super();
+    super(WithdrawalEvent.name, accountId);
   }
 
   static fromPrimitives(args: any): DomainEvent {
@@ -16,7 +16,6 @@ export class WithdrawalEvent extends DomainEvent {
 
   getPrimitivePayload(): object {
     return {
-      accountId: this.accountId,
       amount: this.amount.toPrimitives(),
     };
   }

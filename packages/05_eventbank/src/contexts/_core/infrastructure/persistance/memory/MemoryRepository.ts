@@ -1,4 +1,4 @@
-import { dataStore } from "./data-store";
+import { clearDataStore, dataStore } from "./data-store";
 type Query<T> = { [key in keyof T]?: T[key] };
 export class MemoryRepository<T extends { id: string; }>  {
   create(item: T): Promise<void> {
@@ -24,6 +24,12 @@ export class MemoryRepository<T extends { id: string; }>  {
   findMany(query: Query<T>): Promise<T[]> {
     const matchedItems = dataStore.filter(item => this.matchesQuery(item, query));
     return Promise.resolve(matchedItems);
+  }
+
+
+  clear(): Promise<void> {
+    clearDataStore();
+    return Promise.resolve();
   }
 
   private matchesQuery(item: T, query: Query<T>): boolean {

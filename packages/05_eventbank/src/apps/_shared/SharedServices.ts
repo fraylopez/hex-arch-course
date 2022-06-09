@@ -3,16 +3,10 @@ import { MemoryEventBus } from "../../contexts/_core/infrastructure/bus/memory/M
 
 export class EventBusFactory {
   private static _instance: EventBus;
-  public static get(config: "memory" | "rabbitmq" | "kafka" = "memory"): EventBus {
+  public static get(): EventBus {
     if (!EventBusFactory._instance) {
-      switch (config) {
-        case "memory":
-          EventBusFactory._instance = new MemoryEventBus();
-          break;
-
-        default:
-          throw new Error("EventBus config unknwown");
-      }
+      const bus = new MemoryEventBus();
+      EventBusFactory._instance = bus;
     }
     return EventBusFactory._instance;
   }

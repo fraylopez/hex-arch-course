@@ -1,5 +1,4 @@
+import { Constructor } from "./Constructor";
 import { DomainError } from "./DomainError";
 
-
-
-export type DomainErrorConstructor<T extends DomainError = DomainError> = new (...args: any[]) => T;
+export type DomainErrorConstructor = Constructor<DomainError>;

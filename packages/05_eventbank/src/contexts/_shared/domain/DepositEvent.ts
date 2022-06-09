@@ -2,12 +2,11 @@ import { Money } from "./Money";
 import { DomainEvent } from "../../_core/domain/DomainEvent";
 
 export class DepositEvent extends DomainEvent {
-
   constructor(
     public readonly accountId: string,
     public readonly amount: Money
   ) {
-    super();
+    super(DepositEvent.name, accountId);
   }
 
   static fromPrimitives(args: any): DomainEvent {
@@ -16,7 +15,6 @@ export class DepositEvent extends DomainEvent {
 
   getPrimitivePayload(): object {
     return {
-      accountId: this.accountId,
       amount: this.amount.toPrimitives(),
     };
   }

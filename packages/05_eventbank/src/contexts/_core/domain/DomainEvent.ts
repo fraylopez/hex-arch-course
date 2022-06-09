@@ -1,21 +1,34 @@
 import { Message } from "./Message";
-interface PrimitivesMessage {
+
+type PrimitivePayload<T extends DomainEvent> = ReturnType<T["getPrimitivePayload"]>;
+interface DomainEventPrimitivesWithPayload<TPayload = {}> {
   messageName: string;
-  [key: string]: any;
+  aggregateId: string;
+  timestamp: number;
+  payload: TPayload;
 }
 
+export type DomainEventPrimitives<T extends DomainEvent> = DomainEventPrimitivesWithPayload<PrimitivePayload<T>>;
+
+
 export interface DomainEvent {
-  getPrimitivePayload?(): object;
+  getPrimitivePayload(): object;
 }
+
 export abstract class DomainEvent implements Message {
   static fromPrimitives: (args: any) => DomainEvent;
-  readonly messageName: string;
-  constructor() {
-    this.messageName = this.constructor.name;
+  constructor(
+    public readonly messageName: string,
+    public readonly aggregateId: string,
+    public readonly timestamp?: number,
+  ) {
+    this.timestamp = timestamp || Date.now();
   }
-  toPrimitives(): PrimitivesMessage {
+  toPrimitives(): DomainEventPrimitivesWithPayload {
     return {
       messageName: this.messageName,
+      aggregateId: this.aggregateId,
+      timestamp: Date.now(),
       payload: this.getPrimitivePayload?.call(this) || {},
     };
   }

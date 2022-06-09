@@ -33,6 +33,10 @@ export class TestUtils {
     );
   }
 
+  static sleep(millis: number = 0) {
+    return new Promise(resolve => setTimeout(resolve, millis));
+  }
+
   private static getPath(dirname: string) {
     return dirname
       .split(process.cwd()).join("")

@@ -9,6 +9,7 @@ export class AnalyticsCLIApp {
   private ui!: AnalyticsCLIView;
   private repositoryAdapter!: AnalyticsRepository;
   private eventMapper!: DomainEventMapper;
+  private hexagon!: Tracker;
   constructor() {
     this.createBindings();
   }
@@ -24,12 +25,12 @@ export class AnalyticsCLIApp {
 
   private hexagonBindings() {
     this.repositoryAdapter = new MemoryAnalyticsRepository();
-    const hexagon = new Tracker(this.repositoryAdapter);
-    this.ui = new AnalyticsCLIView(hexagon);
+    this.hexagon = new Tracker(this.repositoryAdapter);
+    this.ui = new AnalyticsCLIView(this.hexagon);
   }
 
   private busBindings() {
     this.eventMapper = new DomainEventMapper();
-    this.eventMapper.subscribe(new TrackOnAccountCreatedEventHandler(this.repositoryAdapter));
+    this.eventMapper.subscribe(new TrackOnAccountCreatedEventHandler(this.hexagon));
   }
 }
