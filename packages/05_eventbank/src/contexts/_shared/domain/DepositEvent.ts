@@ -1,5 +1,5 @@
 import { Money } from "./Money";
-import { DomainEvent } from "../../_core/domain/DomainEvent";
+import { DomainEvent, DomainEventPrimitives } from "../../_core/domain/DomainEvent";
 
 export class DepositEvent extends DomainEvent {
   constructor(
@@ -9,13 +9,14 @@ export class DepositEvent extends DomainEvent {
     super(DepositEvent.name, accountId);
   }
 
-  static fromPrimitives(args: any): DomainEvent {
-    return new DepositEvent(args.accountId, Money.fromPrimitives(args.amount));
+  static fromPrimitives(args: DomainEventPrimitives<DepositEvent>): DomainEvent {
+    return new DepositEvent(args.aggregateId, Money.fromPrimitives(args.payload.amount));
   }
 
-  getPrimitivePayload(): object {
+  getPrimitivePayload() {
     return {
       amount: this.amount.toPrimitives(),
+      type: "DepositEvent",
     };
   }
 }

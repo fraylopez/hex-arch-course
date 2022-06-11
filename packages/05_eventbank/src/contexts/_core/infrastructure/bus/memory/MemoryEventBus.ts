@@ -1,6 +1,6 @@
 /* eslint-disable max-classes-per-file */
 import assert from "assert";
-import { DomainEventMapper } from "../../../../../apps/_core/messages/DomainEventMapper";
+import { DomainEventMapper } from "../../../domain/DomainEventMapper";
 import { DomainEvent } from "../../../domain/DomainEvent";
 import { EventBus } from "../../../domain/EventBus";
 import { Message } from "../../../domain/Message";

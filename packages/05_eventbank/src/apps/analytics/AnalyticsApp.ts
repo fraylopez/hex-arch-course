@@ -3,7 +3,7 @@ import { TrackOnAccountCreatedEventHandler } from "../../contexts/analytics/appl
 import { AnalyticsRepository } from "../../contexts/analytics/domain/AnalyticsRepository";
 import { MemoryAnalyticsRepository } from "../../contexts/analytics/infrastructure/memory/MemoryAnalyticsRepository";
 import { Tracker } from "../../contexts/analytics/application/Tracker";
-import { DomainEventMapper } from "../_core/messages/DomainEventMapper";
+import { DomainEventMapper } from "../../contexts/_core/domain/DomainEventMapper";
 
 export class AnalyticsCLIApp {
   private ui!: AnalyticsCLIView;

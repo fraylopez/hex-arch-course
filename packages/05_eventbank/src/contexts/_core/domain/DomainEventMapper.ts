@@ -1,7 +1,7 @@
 import assert from "assert";
-import { DomainEvent } from "../../../contexts/_core/domain/DomainEvent";
-import { EventHandler } from "../../../contexts/_core/domain/EventHandler";
-import { MessageClass } from "../../../contexts/_core/domain/MessageClass";
+import { DomainEvent } from "./DomainEvent";
+import { EventHandler } from "./EventHandler";
+import { MessageClass } from "./MessageClass";
 
 export class DomainEventMapper {
   private readonly events: Map<string, MessageClass<DomainEvent>>;

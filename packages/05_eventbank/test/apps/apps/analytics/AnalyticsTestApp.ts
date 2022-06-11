@@ -1,4 +1,4 @@
-import { DomainEventMapper } from "../../../../src/apps/_core/messages/DomainEventMapper";
+import { DomainEventMapper } from "../../../../src/contexts/_core/domain/DomainEventMapper";
 import { EventBusFactory } from "../../../../src/apps/_shared/SharedServices";
 import { Tracker } from "../../../../src/contexts/analytics/application/Tracker";
 import { TrackOnAccountCreatedEventHandler } from "../../../../src/contexts/analytics/application/TrackOnAccountCreatedEventHandler";
