@@ -1,4 +1,7 @@
+import assert from "assert";
+
 export class Money {
+
   constructor(
     public readonly value: number,
     public readonly currency: string
@@ -15,13 +18,23 @@ export class Money {
   }
 
   add(amount: Money) {
+    assert(this.sameCurrency(amount), new Error('Incompatible currency'));
     return new Money(this.value + amount.value, this.currency);
   }
 
   subtract(amount: Money) {
+    assert(this.sameCurrency(amount), new Error('Incompatible currency'));
     return new Money(this.value - amount.value, this.currency);
   }
-  sameCurrency(balance: Money): unknown {
+  sameCurrency(balance: Money): boolean {
     return this.currency === balance.currency;
+  }
+  isLessThan(amount: Money) {
+    assert(this.sameCurrency(amount), new Error('Incompatible currency'));
+    return this.value < amount.value;
+  }
+  isLessOrEqualThan(amount: Money) {
+    assert(this.sameCurrency(amount), new Error('Incompatible currency'));
+    return this.value <= amount.value;
   }
 }
