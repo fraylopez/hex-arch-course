@@ -1,0 +1,35 @@
+class WindowCLIView {
+  render()
+}
+
+interface ForCreatingAccounts{
+  create(name: string, currency: string): Promise<string>;
+}
+interface ForExistingAccountsOperation {
+  find(accountId: string): Promise<Account>;
+  deposit(accountId: string, amount: number, currency: string): Promise<void>;
+  withdraw(accountId: string, amount: number, currency: string): Promise<void>;
+}
+
+WindowCLIView --> ForCreatingAccounts
+WindowCLIView --> ForExistingAccountsOperation
+class BankWindow implements ForCreatingAccounts,ForExistingAccountsOperation
+
+interface AccountRepository {
+  create(account: Account): Promise<void>;
+  update(account: Account): Promise<void>;
+  find(accountId: string): Promise<Account | null>;
+}
+
+class MemoryAccountRepository implements AccountRepository
+class FileSystemAccountRepository implements AccountRepository
+
+BankWindow --> AccountRepository
+BankWindow --> Account
+
+
+class Account {
+  deposit()
+  withdraw()
+  getBalance()
+}
