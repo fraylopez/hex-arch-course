@@ -9,6 +9,10 @@ describe(`${TestUtils.getPackagePath(__dirname)}`, () => {
       api.run();
     });
 
+    after(() => {
+      api.stop();
+    });
+
     describe('/account', () => {
       it('should respond with 200 on POST', async () => {
         const response = await TestUtils.localRequest(

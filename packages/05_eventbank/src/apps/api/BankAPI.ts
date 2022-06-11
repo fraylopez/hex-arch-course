@@ -19,6 +19,9 @@ export class BankAPI {
   public run() {
     this.server.start();
   }
+  public stop() {
+    this.server.stop();
+  }
 
   private bind() {
     const hexagon = this.bindHexagon();

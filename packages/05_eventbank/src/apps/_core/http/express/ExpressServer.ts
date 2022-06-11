@@ -22,4 +22,8 @@ export class ExpressServer {
     this.http.listen(this.port);
     console.log(`Server started on port ${this.port}`);
   }
+
+  public stop() {
+    this.http.close();
+  }
 }
