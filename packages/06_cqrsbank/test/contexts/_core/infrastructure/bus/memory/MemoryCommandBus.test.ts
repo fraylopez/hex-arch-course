@@ -21,6 +21,10 @@ describe(`${TestUtils.getPackagePath(__dirname)}`, () => {
       commandBus.setMap(map);
     });
 
+    afterEach(() => {
+      sandbox.restore();
+    });
+
     it('should publish command', async () => {
       const command = new SomeCommand();
       commandBus.publish(command);
@@ -32,6 +36,30 @@ describe(`${TestUtils.getPackagePath(__dirname)}`, () => {
       commandBus.publish(new SomeCommand());
       sinon.assert.calledOnce(spy);
       expect(spy.firstCall.args[0]).to.be.instanceOf(SomeCommand);
+    });
+
+    it('should retry handling', async () => {
+      const stub = sandbox.stub(SomeCommandHandler.prototype, "handle");
+      stub.onCall(0).rejects(new Error("error"));
+      stub.onCall(1).resolves();
+      map.subscribe(new SomeCommandHandler());
+      commandBus.publish(new SomeCommand());
+      await new Promise((resolve) => setTimeout(resolve, MemoryCommandBus.REDELIVERY_DELAY));
+      await new Promise((resolve) => setTimeout(resolve, 0)); // safe delay async/await
+      sinon.assert.calledTwice(stub);
+    });
+
+    it('should stop retrying on max retry attempts', async () => {
+      const stub = sandbox.stub(SomeCommandHandler.prototype, "handle");
+      const spyDeadLetter = sandbox.stub(console, "error");
+      stub.rejects(new Error("error"));
+      map.subscribe(new SomeCommandHandler());
+      commandBus.publish(new SomeCommand());
+      await new Promise((resolve) => setTimeout(resolve, MemoryCommandBus.DELIVERY_ATTEMPTS * MemoryCommandBus.REDELIVERY_DELAY));
+      await new Promise((resolve) => setTimeout(resolve, 0)); // safe delay async/await
+      sinon.assert.calledThrice(stub);
+      sinon.assert.calledOnce(spyDeadLetter);
+      sinon.assert.calledWith(spyDeadLetter, "Dead lettering", sinon.match.any, sinon.match.any);
     });
   });
 });
