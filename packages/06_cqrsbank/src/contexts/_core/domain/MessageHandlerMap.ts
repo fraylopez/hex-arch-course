@@ -23,9 +23,9 @@ export class MessageHandlerMap<TMessage extends Message, THandler extends Messag
     });
   }
 
-  getClass(message: string): MessageClass<TMessage> {
+  getClass<T extends MessageClass<TMessage>>(message: string): T {
     assert(this.messages.has(message), `Message ${message} is not registered`);
-    return this.messages.get(message)!;
+    return this.messages.get(message)! as T;
   }
 
   getHandlers(eventName: string): THandler[] {

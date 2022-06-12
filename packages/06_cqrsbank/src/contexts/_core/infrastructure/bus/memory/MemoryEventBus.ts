@@ -4,7 +4,9 @@ import { DomainEventHandlerMap } from "../../../domain/DomainEventMapper";
 import { DomainEvent } from "../../../domain/DomainEvent";
 import { EventBus } from "../../../domain/EventBus";
 import { Message } from "../../../domain/Message";
+import { MessageClass } from "../../../domain/MessageClass";
 
+type DomainEventClass = MessageClass<DomainEvent> & { fromPrimitives: (primitives: any) => DomainEvent; };
 export class MemoryEventBus implements EventBus {
   private mapper!: DomainEventHandlerMap;
 
@@ -20,7 +22,7 @@ export class MemoryEventBus implements EventBus {
   }
 
   private async transport(serialized: Message) {
-    const EventKlass = this.mapper.getClass(serialized.messageName);
+    const EventKlass = this.mapper.getClass<DomainEventClass>(serialized.messageName);
     await this.handle(EventKlass.fromPrimitives(serialized));
   }
 

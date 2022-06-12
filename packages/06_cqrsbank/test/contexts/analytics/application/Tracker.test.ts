@@ -4,7 +4,7 @@ import { TestUtils } from "../../../../../utils/TestUtils";
 import { Tracker } from "../../../../src/contexts/analytics/application/Tracker";
 
 describe(`${TestUtils.getPackagePath(__dirname)}`, () => {
-  describe('Tracker', () => {
+  describe(`${TestUtils.getUnitTestPath(__dirname, Tracker)}`, () => {
     let controller: Tracker;
     let repository: MemoryAnalyticsRepository;
     before(() => {

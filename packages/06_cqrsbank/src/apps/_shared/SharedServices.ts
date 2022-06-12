@@ -1,8 +1,10 @@
 /* eslint-disable max-classes-per-file */
 import { CommandBus } from "../../contexts/_core/domain/CommandBus";
 import { EventBus } from "../../contexts/_core/domain/EventBus";
+import { QueryBus } from "../../contexts/_core/domain/QueryBus";
 import { MemoryCommandBus } from "../../contexts/_core/infrastructure/bus/memory/MemoryCommandBus";
 import { MemoryEventBus } from "../../contexts/_core/infrastructure/bus/memory/MemoryEventBus";
+import { MemoryQueryBus } from "../../contexts/_core/infrastructure/bus/memory/MemoryQueryBus";
 
 export class EventBusFactory {
   private static _instance: EventBus;
@@ -22,5 +24,15 @@ export class CommandBusFactory {
       CommandBusFactory._instance = bus;
     }
     return CommandBusFactory._instance;
+  }
+}
+export class QueryBusFactory {
+  private static _instance: QueryBus;
+  public static get(): QueryBus {
+    if (!QueryBusFactory._instance) {
+      const bus = new MemoryQueryBus();
+      QueryBusFactory._instance = bus;
+    }
+    return QueryBusFactory._instance;
   }
 }

@@ -1,7 +1,7 @@
-import { CommandHandlerMap } from "./CommandHandlerMap";
 import { Query } from "./Query";
+import { QueryHandlerMap } from "./QueryHandlerMap";
 export interface QueryBus {
-  setMap(mapper: CommandHandlerMap): void;
-  get<T>(command: Query): Promise<T>;
+  setMap(mapper: QueryHandlerMap): void;
+  get<T>(command: Query<T>): Promise<T>;
 }
 

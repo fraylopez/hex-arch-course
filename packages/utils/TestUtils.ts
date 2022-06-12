@@ -6,12 +6,18 @@ export class TestUtils {
     return path.split(".").slice(0, 2).join(".");
   }
   static getUnitTestPath(dirname: string, klass: { name: string; }) {
-    const path = this.getPath(dirname);
+    const path = this.getPath(dirname)
+      .split(this.getPackagePath(dirname))
+      .join("")
+      .slice(1);
     return `${path}.${klass.name}`;
   }
   static getAcceptanceTestPath(dirname: string, title?: string) {
-    const path = this.getPath(dirname);
-    return title ? `${path}/${title}` : path;
+    const path = this.getPath(dirname)
+      .split(this.getPackagePath(dirname))
+      .join("")
+      .slice(1);
+    return title ? `${path}.${title}` : path;
   }
 
   static localRequest(route: string, method: string, body?: any, port: number = 3000) {

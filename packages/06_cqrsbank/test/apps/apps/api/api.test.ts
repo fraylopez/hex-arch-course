@@ -4,54 +4,57 @@ import { TestUtils } from "../../../../../utils/TestUtils";
 import * as uuid from 'uuid';
 
 describe(`${TestUtils.getPackagePath(__dirname)}`, () => {
-  describe('API', () => {
-    let api: BankAPI;
-    before(() => {
-      api = new BankAPI();
-      api.run();
-    });
+  describe(`${TestUtils.getAcceptanceTestPath(__dirname, "BankAPI")}`, () => {
 
-    after(() => {
-      api.stop();
-    });
-
-    describe('/account/:accountId', () => {
-      it('should respond with 200 on POST', async () => {
-        const accountId = uuid.v4();
-        const response = await TestUtils.localRequest(
-          `/account/${accountId}`,
-          "POST",
-          { name: "John", currency: "EUR" },
-        );
-        expect(response.status).to.equal(200);
+    describe('API', () => {
+      let api: BankAPI;
+      before(() => {
+        api = new BankAPI();
+        api.run();
       });
-      it('should respond with 200 and account on GET', async () => {
-        const accountId = uuid.v4();
-        await TestUtils.localRequest(`/account/${accountId}`, "POST", { name: "John", currency: "EUR" });
-        const response = await TestUtils.localRequest(
-          `/account/${accountId}`,
-          "GET",
-        );
-        expect(response.status).to.equal(200);
-        expect(response.data).to.deep.equal({
-          accountId,
-          holder: "John",
-          balance: "0 EUR",
+
+      after(() => {
+        api.stop();
+      });
+
+      describe('/account/:accountId', () => {
+        it('should respond with 200 on POST', async () => {
+          const accountId = uuid.v4();
+          const response = await TestUtils.localRequest(
+            `/account/${accountId}`,
+            "POST",
+            { name: "John", currency: "EUR" },
+          );
+          expect(response.status).to.equal(200);
+        });
+        it('should respond with 200 and account on GET', async () => {
+          const accountId = uuid.v4();
+          await TestUtils.localRequest(`/account/${accountId}`, "POST", { name: "John", currency: "EUR" });
+          const response = await TestUtils.localRequest(
+            `/account/${accountId}`,
+            "GET",
+          );
+          expect(response.status).to.equal(200);
+          expect(response.data).to.deep.equal({
+            accountId,
+            holder: "John",
+            balance: "0 EUR",
+          });
         });
       });
-    });
 
-    describe('/account/deposit', () => {
-      it('should respond with 200 on POST /account/deposit', async () => {
-        const accountId = uuid.v4();
-        await TestUtils.localRequest(`/account/${accountId}`, "POST", { name: "John", currency: "EUR" });
+      describe('/account/deposit', () => {
+        it('should respond with 200 on POST /account/deposit', async () => {
+          const accountId = uuid.v4();
+          await TestUtils.localRequest(`/account/${accountId}`, "POST", { name: "John", currency: "EUR" });
 
-        const depositResponse = await TestUtils.localRequest(
-          "/account/deposit",
-          "POST",
-          { accountId, amount: 100, currency: "EUR" },
-        );
-        expect(depositResponse.status).to.equal(200);
+          const depositResponse = await TestUtils.localRequest(
+            "/account/deposit",
+            "POST",
+            { accountId, amount: 100, currency: "EUR" },
+          );
+          expect(depositResponse.status).to.equal(200);
+        });
       });
     });
   });

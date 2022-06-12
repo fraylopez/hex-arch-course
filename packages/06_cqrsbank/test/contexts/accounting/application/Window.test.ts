@@ -18,7 +18,8 @@ import * as uuid from 'uuid';
 chai.use(chaiAsPromised);
 
 describe(`${TestUtils.getPackagePath(__dirname)}`, () => {
-  describe('EventBank', () => {
+  describe(`${TestUtils.getAcceptanceTestPath(__dirname, "EventBank")}`, () => {
+
     let sandbox: SinonSandbox;
     let eventBus: SinonStubbedInstance<EventBus>;
     before(() => {

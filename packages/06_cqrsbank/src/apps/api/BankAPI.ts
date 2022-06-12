@@ -3,7 +3,7 @@ import { AccountRepository } from "../../contexts/accounting/domain/AccountRepos
 import { ForExistingAccountsOperation } from "../../contexts/accounting/domain/ForAccountsInteraction";
 import { ForCreatingAccounts } from "../../contexts/accounting/domain/ForCreatingAccounts";
 import { MemoryAccountRepository } from "../../contexts/accounting/infrastructure/persistance/memory/MemoryAccountRepository";
-import { CommandBusFactory, EventBusFactory } from "../_shared/SharedServices";
+import { CommandBusFactory, EventBusFactory, QueryBusFactory } from "../_shared/SharedServices";
 import { ExpressServer } from "../_core/http/express/ExpressServer";
 import { CreateAccountPostController } from "./routes/CreateAccountPostController";
 import { DepositPostController } from "./routes/DepositPostController";
@@ -11,6 +11,9 @@ import { AccountGetController } from "./routes/AccountGetController";
 import { CommandHandlerMap } from "../../contexts/_core/domain/CommandHandlerMap";
 import { CommandBus } from "../../contexts/_core/domain/CommandBus";
 import { CreateAccountCommandHandler } from "../../contexts/accounting/application/create/CreateAccountCommandHandler";
+import { FindAccountQueryHandler } from "../../contexts/accounting/application/find/FindAccountQueryHandler";
+import { QueryHandlerMap } from "../../contexts/_core/domain/QueryHandlerMap";
+import { QueryBus } from "../../contexts/_core/domain/QueryBus";
 
 export class BankAPI {
   private server!: ExpressServer;
@@ -30,9 +33,9 @@ export class BankAPI {
 
   private bind() {
     const hexagon = this.bindHexagon();
-    const bus = this.commandBusBindings(hexagon);
-    this.bindHttp(hexagon, bus);
-
+    const commandBus = this.commandBusBindings(hexagon);
+    const queryBus = this.queryBusBindings(hexagon);
+    this.bindHttp(commandBus, queryBus);
   }
 
   private bindHexagon() {
@@ -40,14 +43,22 @@ export class BankAPI {
     return new BankWindow(this.repositoryAdapter, EventBusFactory.get());
   }
 
-  private bindHttp(hexagon: ForCreatingAccounts & ForExistingAccountsOperation, bus: CommandBus) {
+  private bindHttp(commandBus: CommandBus, queryBus: QueryBus) {
     this.server = new ExpressServer(3000);
     [
-      new CreateAccountPostController(bus),
-      new AccountGetController(hexagon),
-      new DepositPostController(hexagon),
+      new CreateAccountPostController(commandBus),
+      new AccountGetController(queryBus),
+      new DepositPostController(commandBus),
     ]
       .forEach(controller => this.server.addRouteController(controller));
+  }
+
+  private queryBusBindings(hexagon: ForCreatingAccounts & ForExistingAccountsOperation) {
+    const queryBus = QueryBusFactory.get();
+    const handlers = new QueryHandlerMap();
+    handlers.subscribe(new FindAccountQueryHandler(hexagon));
+    queryBus.setMap(handlers);
+    return queryBus;
   }
 
   private commandBusBindings(hexagon: ForCreatingAccounts & ForExistingAccountsOperation) {
