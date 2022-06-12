@@ -4,13 +4,10 @@ import { BankWindow } from "../src/contexts/accounting/application/BankWindow";
 import { IncompatibleCurrencyError } from "../src/contexts/accounting/domain/IncompatibleCurrencyError";
 import { Money } from "../src/contexts/_shared/domain/Money";
 import chaiAsPromised from "chai-as-promised";
-import { ForAccountAdministration } from "../src/contexts/administration/domain/ForAccountAdministration";
-import { BankAdmin } from "../src/contexts/administration/application/BankAdmin";
 import { MemoryAccountRepository } from "../src/contexts/accounting/infrastructure/persistance/memory/MemoryAccountRepository";
 import { ForCreatingAccounts } from "../src/contexts/accounting/domain/ForCreatingAccounts";
 import { ForExistingAccountsOperation } from "../src/contexts/accounting/domain/ForAccountsInteraction";
 import { ATM } from "../src/contexts/accounting/application/ATM";
-import { MemoryAdminAccountRepository } from "../src/contexts/administration/infrastructure/persistence/memory/MemoryAdminAccountRepository";
 import { TestUtils } from "../../utils/TestUtils";
 import { AccountRepository } from "../src/contexts/accounting/domain/AccountRepository";
 
@@ -92,32 +89,6 @@ describe(`${TestUtils.getPackagePath(__dirname)}`, () => {
           .to.be.rejectedWith(IncompatibleCurrencyError);
       });
 
-    });
-    describe('Admin', () => {
-      let bankAdapter: ForCreatingAccounts;
-      let adminAdapter: ForAccountAdministration;
-      before(() => {
-        const memoryAccountRepository = new MemoryAccountRepository();
-        const memoryAdminAccountRepository = new MemoryAdminAccountRepository();
-
-        bankAdapter = new BankWindow(memoryAccountRepository);
-        adminAdapter = new BankAdmin(memoryAdminAccountRepository);
-      });
-
-      it('should close an  account', async () => {
-        const accountId = await bankAdapter.create('John', "EUR");
-        await adminAdapter.close(accountId);
-        const account = await adminAdapter.find(accountId);
-        expect(account.isOpen()).to.equal(false);
-      });
-
-      it('should reopen an  account', async () => {
-        const accountId = await bankAdapter.create('John', "EUR");
-        await adminAdapter.close(accountId);
-        await adminAdapter.reopen(accountId);
-        const account = await adminAdapter.find(accountId);
-        expect(account.isOpen()).to.equal(true);
-      });
     });
   });
 });

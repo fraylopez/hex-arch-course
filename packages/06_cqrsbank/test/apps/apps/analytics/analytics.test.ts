@@ -13,7 +13,7 @@ describe(`${TestUtils.getPackagePath(__dirname)}`, () => {
       });
 
       it('should increment account metric on AccountCreatedEvent', async () => {
-        testAdapter.publish(new AccountCreatedEvent('some-account-id', 'EUR'));
+        testAdapter.publish(new AccountCreatedEvent('some-account-id', "John", 'EUR'));
         await TestUtils.sleep();
         const eurAccounts = await testAdapter.hexagon.findAccountsPerCurrency("EUR");
         expect(eurAccounts.length).equal(1);
