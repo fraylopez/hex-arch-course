@@ -18,7 +18,7 @@ export class Account extends AggregateRoot {
 
   static create(id: string, name: string, currency: string): Account {
     const account = new Account(id || uuid.v4(), name, new Money(0, currency));
-    account.onChange(new AccountCreatedEvent(account.id, currency));
+    account.onChange(new AccountCreatedEvent(account.id, account.name, currency));
     return account;
   }
 

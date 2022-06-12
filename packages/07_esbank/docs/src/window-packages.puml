@@ -1,0 +1,35 @@
+@startuml
+package apps {
+  package window{}
+}
+
+package contexts {
+   package shared{
+    package shared.domain{}
+    package shared.infrastructure{}
+  }
+  package core{
+    package core.domain{}
+    package core.infrastructure{}
+  }
+
+  package accounting{
+    package accounting.domain{}
+    package accounting.application{}
+    package accounting.infrastructure{}
+  }
+}
+
+window --> accounting.infrastructure
+window --> accounting.application
+window --> accounting.domain
+accounting.application --> accounting.domain
+accounting.infrastructure ..|> accounting.domain
+
+accounting --> core
+accounting --> shared
+
+core.infrastructure ..|> core.domain
+shared.infrastructure ..|> shared.domain
+
+@enduml
