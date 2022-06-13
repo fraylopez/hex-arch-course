@@ -6,18 +6,16 @@ import { AnalyticsTestApp } from "./AnalyticsTestApp";
 describe(`${TestUtils.getPackagePath(__dirname)}`, () => {
   describe(`${TestUtils.getAcceptanceTestPath(__dirname, "Analytics")}`, () => {
 
-    describe('Analytics', () => {
-      let testAdapter: AnalyticsTestApp;
-      before(() => {
-        testAdapter = new AnalyticsTestApp();
-      });
+    let testAdapter: AnalyticsTestApp;
+    before(() => {
+      testAdapter = new AnalyticsTestApp();
+    });
 
-      it('should increment account metric on AccountCreatedEvent', async () => {
-        testAdapter.publish(new AccountCreatedEvent('some-account-id', "John", 'EUR'));
-        await TestUtils.sleep();
-        const eurAccounts = await testAdapter.hexagon.findAccountsPerCurrency("EUR");
-        expect(eurAccounts.length).equal(1);
-      });
+    it('should increment account metric on AccountCreatedEvent', async () => {
+      testAdapter.publish(new AccountCreatedEvent('some-account-id', "John", 'EUR'));
+      await TestUtils.sleep();
+      const eurAccounts = await testAdapter.hexagon.findAccountsPerCurrency("EUR");
+      expect(eurAccounts.length).equal(1);
     });
   });
 });
