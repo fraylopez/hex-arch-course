@@ -1,5 +1,5 @@
+import { PersistanceQuery } from "../PersistanceQuery";
 import { clearDataStore, dataStore } from "./data-store";
-type Query<T> = { [key in keyof T]?: T[key] };
 export class MemoryRepository<T extends { id: string; }>  {
   create(item: T): Promise<void> {
     dataStore.push(item);
@@ -21,18 +21,17 @@ export class MemoryRepository<T extends { id: string; }>  {
     const item = dataStore.find(a => a.id === id);
     return Promise.resolve(item || null);
   }
-  findMany(query: Query<T>): Promise<T[]> {
+  findMany(query: PersistanceQuery<T>): Promise<T[]> {
     const matchedItems = dataStore.filter(item => this.matchesQuery(item, query));
     return Promise.resolve(matchedItems);
   }
-
 
   clear(): Promise<void> {
     clearDataStore();
     return Promise.resolve();
   }
 
-  private matchesQuery(item: T, query: Query<T>): boolean {
+  private matchesQuery(item: T, query: PersistanceQuery<T>): boolean {
     let match = true;
     for (const key in query) {
       match = match && item[key as keyof T] === query[key];

@@ -12,8 +12,8 @@ import { EventBus } from "../../../../src/contexts/_core/domain/EventBus";
 import { WithdrawalEvent } from "../../../../src/contexts/_shared/domain/WithdrawalEvent";
 import { DepositEvent } from "../../../../src/contexts/_shared/domain/DepositEvent";
 import { TestUtils } from "../../../../../utils/TestUtils";
-import { MemoryEventBus } from "../../../../src/contexts/_core/infrastructure/bus/memory/MemoryEventBus";
 import * as uuid from 'uuid';
+import { MemoryEventBus } from "../../../../src/contexts/_core/infrastructure/bus/memory/MemoryEventBus";
 
 chai.use(chaiAsPromised);
 

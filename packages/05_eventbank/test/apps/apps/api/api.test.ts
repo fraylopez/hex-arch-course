@@ -39,11 +39,11 @@ describe(`${TestUtils.getPackagePath(__dirname)}`, () => {
       });
     });
 
-    describe('/account/deposit', () => {
-      it('should respond with 200 on POST /account/deposit', async () => {
+    describe('/deposit', () => {
+      it('should respond with 200 on POST /deposit', async () => {
         const creationResponse = await TestUtils.localRequest("/account", "POST", { name: "John", currency: "EUR" });
         const depositResponse = await TestUtils.localRequest(
-          "/account/deposit",
+          "/deposit",
           "POST",
           { accountId: creationResponse.data.id, amount: 100, currency: "EUR" },
         );

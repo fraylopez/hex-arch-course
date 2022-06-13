@@ -4,7 +4,7 @@ import { ExpressController } from "../../_core/http/express/ExpressController";
 
 export class DepositPostController extends ExpressController {
   constructor(private readonly hexagon: ForExistingAccountsOperation) {
-    super("post", "/account/deposit");
+    super("post", "/deposit");
   }
   protected async run(req: Request) {
     return this.hexagon.deposit(req.body.accountId, req.body.amount, req.body.currency);

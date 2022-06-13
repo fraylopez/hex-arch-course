@@ -5,7 +5,7 @@ import { ExpressController } from "../../_core/http/express/ExpressController";
 
 export class DepositPostController extends ExpressController {
   constructor(private readonly commandBus: CommandBus) {
-    super("post", "/account/deposit");
+    super("post", "/deposit");
   }
   protected run(req: Request) {
     this.commandBus.publish(new DepositCommand(req.body.accountId, req.body.amount, req.body.currency));

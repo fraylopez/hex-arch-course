@@ -11,7 +11,7 @@ export class MessageHandlerMap<TMessage extends Message, THandler extends Messag
     this.handlers = new Map();
   }
   subscribe(handler: THandler): void {
-    handler.getSubscriptions().forEach(klass => this.messages.set(klass.name, klass as MessageClass<TMessage>));
+    handler.getSubscriptions().forEach(klass => this.addClass(klass));
     const eventKlasses = handler.getSubscriptions();
     eventKlasses.forEach(eventKlass => {
       const handlersForEvent = this.handlers.get(eventKlass.name);
@@ -21,6 +21,10 @@ export class MessageHandlerMap<TMessage extends Message, THandler extends Messag
         handlersForEvent.push(handler);
       }
     });
+  }
+
+  addClass(klass: MessageClass<Message>) {
+    this.messages.set(klass.name, klass as MessageClass<TMessage>);
   }
 
   getClass<T extends MessageClass<TMessage>>(message: string): T {

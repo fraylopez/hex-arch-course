@@ -2,7 +2,6 @@ import { BankWindow } from "../../contexts/accounting/application/BankWindow";
 import { AccountRepository } from "../../contexts/accounting/domain/AccountRepository";
 import { ForExistingAccountsOperation } from "../../contexts/accounting/domain/ForAccountsInteraction";
 import { ForCreatingAccounts } from "../../contexts/accounting/domain/ForCreatingAccounts";
-import { MemoryAccountRepository } from "../../contexts/accounting/infrastructure/persistance/memory/MemoryAccountRepository";
 import { CommandBusFactory, EventBusFactory, QueryBusFactory } from "../_shared/SharedServices";
 import { ExpressServer } from "../_core/http/express/ExpressServer";
 import { CreateAccountPostController } from "./routes/CreateAccountPostController";
@@ -14,6 +13,8 @@ import { CreateAccountCommandHandler } from "../../contexts/accounting/applicati
 import { FindAccountQueryHandler } from "../../contexts/accounting/application/find/FindAccountQueryHandler";
 import { QueryHandlerMap } from "../../contexts/_core/domain/QueryHandlerMap";
 import { QueryBus } from "../../contexts/_core/domain/QueryBus";
+import { FileSystemAccountEventStore } from "../../contexts/accounting/infrastructure/persistance/filesystem/FileSystemAccountEventStore";
+import { DepositCommandHandler } from "../../contexts/accounting/application/deposit/DepositCommandHandler";
 
 export class BankAPI {
   private server!: ExpressServer;
@@ -37,7 +38,7 @@ export class BankAPI {
   }
 
   private bindHexagon() {
-    this.repositoryAdapter = new MemoryAccountRepository();
+    this.repositoryAdapter = new FileSystemAccountEventStore();
     return new BankWindow(this.repositoryAdapter, EventBusFactory.get());
   }
 
@@ -63,6 +64,7 @@ export class BankAPI {
     const commandBus = CommandBusFactory.get();
     const commandHandlers = new CommandHandlerMap();
     commandHandlers.subscribe(new CreateAccountCommandHandler(hexagon));
+    commandHandlers.subscribe(new DepositCommandHandler(hexagon));
 
     commandBus.setMap(commandHandlers);
     return commandBus;

@@ -6,6 +6,7 @@ interface DomainEventPrimitivesWithPayload<TPayload = {}> {
   messageName: string;
   aggregateId: string;
   timestamp: number;
+  date: string;
   payload: TPayload;
   eventId: string;
 }
@@ -18,6 +19,7 @@ export interface DomainEvent {
 }
 
 export abstract class DomainEvent implements Message {
+  private date!: Date;
   constructor(
     public messageName: string,
     private aggregateId: string,
@@ -26,6 +28,7 @@ export abstract class DomainEvent implements Message {
   ) {
     this.timestamp = timestamp || Date.now();
     this.eventId = eventId || uuid.v4();
+    this.date = new Date(this.timestamp);
   }
 
   static fromPrimitives(primitives: DomainEventPrimitivesWithPayload): DomainEvent {
@@ -35,6 +38,7 @@ export abstract class DomainEvent implements Message {
     event.aggregateId = primitives.aggregateId;
     event.timestamp = primitives.timestamp;
     event.eventId = primitives.eventId;
+    event.date = new Date(primitives.timestamp);
     return event;
   }
 
@@ -45,6 +49,7 @@ export abstract class DomainEvent implements Message {
       payload: this.getPrimitivePayload?.call(this) || {},
       timestamp: this.timestamp!,
       eventId: this.eventId!,
+      date: this.date.toISOString(),
     };
   }
 
