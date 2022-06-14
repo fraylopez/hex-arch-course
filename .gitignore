@@ -104,3 +104,4 @@ dist
 .tern-port
 
 .vscode/
+packages/07_esbank/.data/
