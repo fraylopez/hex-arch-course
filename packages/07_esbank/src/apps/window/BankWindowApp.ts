@@ -19,7 +19,7 @@ export class BankWindowApp {
   private createBindings(): void {
     const repositoryAdapter: AccountRepository = new MemoryAccountRepository();
     const hexagon: ForCreatingAccounts & ForExistingAccountsOperation =
-      new BankWindow(repositoryAdapter, EventBusFactory.get("memory"));
+      new BankWindow(repositoryAdapter, EventBusFactory.get());
     this.ui = new WindowCLIView(hexagon);
   }
 }

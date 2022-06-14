@@ -38,7 +38,8 @@ export class BankAPI {
   }
 
   private bindHexagon() {
-    this.repositoryAdapter = new FileSystemAccountEventStore();
+    const storagePath = `${__dirname.split("src/")[0]}/.data`;
+    this.repositoryAdapter = new FileSystemAccountEventStore(storagePath);
     return new BankWindow(this.repositoryAdapter, EventBusFactory.get());
   }
 

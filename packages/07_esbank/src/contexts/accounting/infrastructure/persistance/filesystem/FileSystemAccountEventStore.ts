@@ -3,10 +3,9 @@ import { Account } from "../../../domain/Account";
 import { AccountRepository } from "../../../domain/AccountRepository";
 
 export class FileSystemAccountEventStore implements AccountRepository {
-  private static storagePath = `${__dirname}/data/events`;
   private readonly filesystemEventStore: FileSystemEventStore<Account>;
-  constructor() {
-    this.filesystemEventStore = new FileSystemEventStore(FileSystemAccountEventStore.storagePath);
+  constructor(storagePath: string) {
+    this.filesystemEventStore = new FileSystemEventStore(`${storagePath}/events`);
   }
 
   async create(account: Account): Promise<void> {

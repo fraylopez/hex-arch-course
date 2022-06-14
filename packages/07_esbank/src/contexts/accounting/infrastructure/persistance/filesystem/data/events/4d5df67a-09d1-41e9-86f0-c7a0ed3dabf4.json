@@ -1,1 +1,0 @@
-{"messageName":"DepositEvent","aggregateId":"2ac120f4-df7f-4f41-a56d-bf4e264a3720","payload":{"amount":{"value":100,"currency":"EUR"},"type":"DepositEvent"},"timestamp":1655147695905,"eventId":"4d5df67a-09d1-41e9-86f0-c7a0ed3dabf4","date":"2022-06-13T19:14:55.905Z","id":"4d5df67a-09d1-41e9-86f0-c7a0ed3dabf4"}

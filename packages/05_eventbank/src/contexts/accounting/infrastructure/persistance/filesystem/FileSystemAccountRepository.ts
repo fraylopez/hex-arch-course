@@ -3,9 +3,10 @@ import { Account } from "../../../domain/Account";
 import { AccountRepository } from "../../../domain/AccountRepository";
 
 export class FileSystemAccountRepository implements AccountRepository {
-  private static storagePath = `${__dirname}/data/accounts`;
-  constructor() {
-    this.ensureDirectoryExistence(FileSystemAccountRepository.storagePath);
+  private readonly storagePath: string;
+  constructor(baseStoragePath: string) {
+    this.storagePath = `${baseStoragePath}/accounts`;
+    this.ensureDirectoryExistence(`${this.storagePath}`);
   }
 
   async create(account: Account): Promise<void> {
@@ -14,13 +15,13 @@ export class FileSystemAccountRepository implements AccountRepository {
 
   update(account: Account): Promise<void> {
     const data = JSON.stringify(account.toPrimitives());
-    const filename = `${FileSystemAccountRepository.storagePath}/${account.id}.json`;
+    const filename = `${this.storagePath}/${account.id}.json`;
     fs.writeFileSync(filename, data, "utf8");
     return Promise.resolve();
   }
 
   find(accountId: string): Promise<Account> {
-    const data = fs.readFileSync(`${FileSystemAccountRepository.storagePath}/${accountId}.json`, "utf8");
+    const data = fs.readFileSync(`${this.storagePath}/${accountId}.json`, "utf8");
     return Promise.resolve(Account.fromPrimitives(JSON.parse(data)));
   }
 

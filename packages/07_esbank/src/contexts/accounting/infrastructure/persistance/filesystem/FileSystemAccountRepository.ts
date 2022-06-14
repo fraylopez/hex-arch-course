@@ -4,10 +4,9 @@ import { AccountRepository } from "../../../domain/AccountRepository";
 
 type AccountPrimitives = ReturnType<typeof Account.prototype.toPrimitives>;
 export class FileSystemAccountRepository implements AccountRepository {
-  private static storagePath = `${__dirname}/data/accounts`;
   private readonly filesystemRepository: FileSystemRepository<AccountPrimitives>;
-  constructor() {
-    this.filesystemRepository = new FileSystemRepository(FileSystemAccountRepository.storagePath);
+  constructor(storagePath: string) {
+    this.filesystemRepository = new FileSystemRepository(`${storagePath}/accounts`);
   }
 
   async create(account: Account): Promise<void> {
