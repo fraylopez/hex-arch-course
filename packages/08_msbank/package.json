@@ -1,0 +1,29 @@
+{
+  "name": "msbank",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start:window": "ts-node src/apps/window/index.ts",
+    "start:atm": "ts-node src/apps/atm/index.ts",
+    "start:analytics": "ts-node src/apps/analytics/index.ts",
+    "start:api": "ts-node src/apps/api/index.ts",
+    "test": "mocha ",
+    "build": "rm -rf ./dist && tsc"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^17.0.24",
+    "@types/readline-sync": "^1.4.4",
+    "@types/uuid": "^8.3.4",
+    "axios": "^0.27.2",
+    "ts-node": "^10.7.0"
+  },
+  "dependencies": {
+    "express": "^4.18.1",
+    "http-status": "^1.5.2",
+    "readline-sync": "^1.4.10",
+    "uuid": "^8.3.2"
+  }
+}

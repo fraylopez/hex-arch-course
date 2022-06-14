@@ -1,0 +1,31 @@
+{
+  // "extends": "@goinapp/tsconfig/tsconfig.json",
+  "compilerOptions": {
+    // "module": "ES2022",
+
+    "allowJs": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noFallthroughCasesInSwitch": true,
+    "target": "es2016",
+    // "module": "esnext",
+    "useUnknownInCatchVariables": false,
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    // "noEmit": true,
+    // "jsx": "react-jsx",
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    // "sourceMap": true,
+    "outDir": "./dist",
+    "declaration": false,
+    "rootDir": "./src",
+  },
+  "include": [
+    "./src/**/*.ts",
+  ]
+}

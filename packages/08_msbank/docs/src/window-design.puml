@@ -1,0 +1,53 @@
+class WindowApp { }
+
+class WindowCLIView {
+  render()
+}
+
+interface EventBus {
+  publish(event: DomainEvent): void
+}
+
+abstract class DomainEvent{}
+EventBus ..> DomainEvent
+
+interface ForCreatingAccounts{
+  create(name: string, currency: string): Promise<string>;
+}
+interface ForExistingAccountsOperation {
+  find(accountId: string): Promise<Account>;
+  deposit(accountId: string, amount: number, currency: string): Promise<void>;
+  withdraw(accountId: string, amount: number, currency: string): Promise<void>;
+}
+
+WindowApp *--> WindowCLIView
+WindowApp *--> ForCreatingAccounts
+WindowApp *--> ForExistingAccountsOperation
+WindowApp *--> AccountRepository
+WindowApp *--> EventBus
+
+WindowCLIView --> ForCreatingAccounts
+WindowCLIView --> ForExistingAccountsOperation
+class BankWindow implements ForCreatingAccounts,ForExistingAccountsOperation
+
+interface AccountRepository {
+  create(account: Account): Promise<void>;
+  update(account: Account): Promise<void>;
+  find(accountId: string): Promise<Account | null>;
+}
+
+class MemoryAccountRepository implements AccountRepository
+class FileSystemAccountRepository implements AccountRepository
+
+BankWindow --> AccountRepository
+BankWindow --> Account
+BankWindow --> EventBus
+
+
+class Account {
+  deposit()
+  withdraw()
+  getBalance()
+}
+
+Account ..> DomainEvent

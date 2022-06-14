@@ -1,0 +1,1 @@
+{"messageName":"AccountCreatedEvent","aggregateId":"5619ace5-49c8-4044-84cb-d0720fbc2c36","payload":{"holder":"John","currency":"EUR"},"timestamp":1655214082433,"eventId":"35493719-0f7c-4d88-a473-c4d52c0fd1f0","date":"2022-06-14T13:41:22.433Z","id":"35493719-0f7c-4d88-a473-c4d52c0fd1f0"}
